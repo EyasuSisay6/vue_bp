@@ -1,32 +1,85 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <Toolbar />
+    <v-main class="text-center">
+      <loading />
+      <v-container fluid>
+        <transition name="fade" mode="out-in">
+          <router-view />
+        </transition>
+      </v-container>
+    </v-main>
+    <Footer />
+  </v-app>
 </template>
 
+<script>
+import Toolbar from '@/components/core/Toolbar.vue'
+import Loading from '@/components/core/Loading.vue'
+import Footer from '@/components/core/Footer.vue'
+
+export default {
+  name: 'App',
+  metaInfo() {
+    return {
+      title: this.appTitle,
+      htmlAttrs: {
+        lang: this.$i18n.locale
+      },
+      meta: [
+        { name: 'msapplication-TileColor', content: '#ffc40d' },
+        { name: 'theme-color', content: '#ffffff' },
+        {
+          name: 'apple-mobile-web-app-title',
+          content: this.appTitle
+        },
+        { name: 'application-name', content: this.appTitle }
+      ],
+      link: [
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '16x16',
+          href: '/favicon-16x16.png'
+        },
+        { rel: 'manifest', href: '/site.webmanifest' },
+        { rel: 'mask-icon', color: '#5bbad5', href: '/safari-pinned-tab.svg' },
+        { rel: 'favicon', href: '/favicon.ico' }
+      ]
+    }
+  },
+  components: {
+    Toolbar,
+    Loading,
+    Footer
+  },
+  computed: {
+    appTitle() {
+      return this.$store.getters.appTitle
+    }
+  }
+}
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
