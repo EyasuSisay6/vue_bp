@@ -11,20 +11,20 @@
 
 <script>
 export default {
-  name: 'SubmitButton',
+  name: "SubmitButton",
   props: {
     color: String,
     buttonText: String,
     customClass: String,
-    text: Boolean
+    text: Boolean,
   },
   computed: {
     disabledButton() {
-      return this.$store.state.loading.showLoading
+      return this.$store.state.loading.showLoading;
     },
     colorString() {
-      return this.color ? this.color : 'secondary'
-    }
-  }
-}
+      return this.color ? this.color : "secondary";
+    },
+  },
+};
 </script>

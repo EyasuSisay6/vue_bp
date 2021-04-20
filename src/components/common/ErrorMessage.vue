@@ -13,7 +13,7 @@
             <li v-for="(item, index) in error" :key="index">{{ item }}</li>
           </ul>
           <v-btn text @click="showErrorMessage = false">{{
-            $t('common.CLOSE')
+            $t("common.CLOSE")
           }}</v-btn>
         </v-snackbar>
       </v-flex>
@@ -22,30 +22,33 @@
 </template>
 
 <script>
-import * as types from '@/store/mutation-types'
-import { formatErrorMessages } from '@/utils/utils.js'
+import * as types from "@/store/mutation-types";
+import { formatErrorMessages } from "@/utils/utils.js";
 
 export default {
-  name: 'ErrorMessage',
+  name: "ErrorMessage",
   computed: {
     showErrorMessage: {
       get() {
-        return this.$store.state.error.showErrorMessage
+        return this.$store.state.error.showErrorMessage;
       },
       set(value) {
-        this.$store.commit(types.SHOW_ERROR, value)
-      }
+        this.$store.commit(types.SHOW_ERROR, value);
+      },
     },
     error() {
-      return formatErrorMessages('errors', this.$store.state.error.errorMessage)
-    }
+      return formatErrorMessages(
+        "errors",
+        this.$store.state.error.errorMessage
+      );
+    },
   },
   watch: {
     error() {
       setTimeout(() => {
-        this.showErrorMessage = this.error !== null
-      }, 100)
-    }
-  }
-}
+        this.showErrorMessage = this.error !== null;
+      }, 100);
+    },
+  },
+};
 </script>

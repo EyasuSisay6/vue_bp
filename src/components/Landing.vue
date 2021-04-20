@@ -1,9 +1,13 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <Heading :title="$t('landing.TITLE')" />
-      <Description :description="$t('landing.DESCRIPTION')" />
-    </v-layout>
-    <ProjectDescription />
-  </v-container>
+  <div>
+    <LandingContent />
+  </div>
 </template>
+<script>
+import LandingContent from "./landing/LandingContent";
+export default {
+  components: {
+    LandingContent,
+  },
+};
+</script>

@@ -11,7 +11,7 @@
         >
           {{ successMessage }}
           <v-btn text @click="showSuccessMessage = false">
-            {{ $t('common.CLOSE') }}
+            {{ $t("common.CLOSE") }}
           </v-btn>
         </v-snackbar>
       </v-flex>
@@ -20,37 +20,37 @@
 </template>
 
 <script>
-import * as types from '@/store/mutation-types'
+import * as types from "@/store/mutation-types";
 
 export default {
-  name: 'SuccessMessage',
+  name: "SuccessMessage",
   computed: {
     showSuccessMessage: {
       get() {
-        return this.$store.state.success.showSuccessMessage
+        return this.$store.state.success.showSuccessMessage;
       },
       set(value) {
-        this.$store.commit(types.SHOW_SUCCESS, value)
-      }
+        this.$store.commit(types.SHOW_SUCCESS, value);
+      },
     },
     successMessage() {
       if (this.$store.state.success.successMessageParams) {
         return this.$i18n.t(this.$store.state.success.successMessage, [
-          ...this.$store.state.success.successMessageParams
-        ])
+          ...this.$store.state.success.successMessageParams,
+        ]);
       }
-      return this.$i18n.t(this.$store.state.success.successMessage)
+      return this.$i18n.t(this.$store.state.success.successMessage);
     },
     successMessageTimeout() {
-      return this.$store.state.success.successMessageTimeout
-    }
+      return this.$store.state.success.successMessageTimeout;
+    },
   },
   watch: {
     successMessage() {
       setTimeout(() => {
-        this.showSuccessMessage = this.successMessage !== ''
-      }, 100)
-    }
-  }
-}
+        this.showSuccessMessage = this.successMessage !== "";
+      }, 100);
+    },
+  },
+};
 </script>

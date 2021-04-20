@@ -4,9 +4,9 @@
 
 <script>
 export default {
-  name: 'Description',
+  name: "Description",
   props: {
-    description: String
-  }
-}
+    description: String,
+  },
+};
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-menu v-model="showMenu" offset-y>
     <template v-slot:activator="{ on }">
-      <v-btn class="btnLocaleActivation" v-on="on" text>
+      <v-btn class="btnLocaleActivation" color="black" v-on="on" text>
         <v-icon>mdi-earth</v-icon>
         &nbsp;{{ displayLocale }}
       </v-btn>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import CountryFlag from 'vue-country-flag'
+import CountryFlag from "vue-country-flag";
 
 export default {
   data() {
@@ -33,42 +33,27 @@ export default {
       showMenu: false,
       langs: [
         {
-          lang: 'en',
-          flag: 'gb',
-          class: 'btnEN'
+          lang: "en",
+          flag: "gb",
+          class: "btnEN",
         },
-        {
-          lang: 'es',
-          flag: 'es',
-          class: 'btnES'
-        },
-        {
-          lang: 'fr',
-          flag: 'fr',
-          class: 'btnFR'
-        },
-        {
-          lang: 'cn',
-          flag: 'cn',
-          class: 'btnCN'
-        }
-      ]
-    }
+      ],
+    };
   },
   components: {
-    CountryFlag
+    CountryFlag,
   },
   methods: {
     switchLocale(lang) {
-      this.$store.dispatch('setLocale', lang)
-    }
+      this.$store.dispatch("setLocale", lang);
+    },
   },
   computed: {
     displayLocale() {
-      return this.$i18n.locale
-    }
-  }
-}
+      return this.$i18n.locale;
+    },
+  },
+};
 </script>
 
 <style>
