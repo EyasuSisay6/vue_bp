@@ -152,7 +152,7 @@
         ></v-text-field>
       </v-col>
       <v-col cols="12" sm="6" md="4">
-        <v-row :class=" mt-8" justify="center">
+        <v-row class="mt-8" justify="center">
           <v-btn dark color="error" large class="mr-4">Cancel</v-btn>
           <v-btn dark color="#09b750" large class="ml-4">Publish</v-btn>
         </v-row>
@@ -165,9 +165,8 @@
 export default {
   data() {
     return {
-    
       image: null,
-      imageUrl: 
+      imageUrl:
         "https://cdn1.iconfinder.com/data/icons/facebook-ui/48/additional_icons-03-512.png",
     };
   },
