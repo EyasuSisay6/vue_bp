@@ -21,6 +21,9 @@ export const SHOW_CHANGE_PASSWORD_INPUTS = "SHOW_CHANGE_PASSWORD_INPUTS";
 // profile
 export const FILL_PROFILE = "FILL_PROFILE";
 export const ADD_PROFILE_DATA = "ADD_PROFILE_DATA";
+// categories
+export const FILL_CATEGORIES = "FILL_CATEGORIES";
+export const ADD_CATEGORY = "ADD_CATEGORY";
 // cities
 export const FILL_ALL_CITIES = "FILL_ALL_CITIES";
 // Admin - Cities

@@ -100,7 +100,7 @@
       <div class="mx-4 my-5">
         <v-row>
           <v-col v-for="(n, i) in categories" :key="i">
-            <CategoryCard :title="n.title" :image="n.image" />
+            <CategoryCard :title="n.title" :image="n.image" :id="n.id" />
           </v-col>
         </v-row>
       </div>
@@ -226,44 +226,15 @@ export default {
     ProductCard,
     CategoryCard,
   },
+  computed: {
+    categories() {
+      return this.$store.getters.categories;
+    },
+  },
   data() {
     return {
       model: null,
       rating: 4,
-      categories: [
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/1.2ce1d51.jpg",
-          title: "Electronics",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/2.c920612.jpg",
-          title: "Clothings",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/3.4dd1f5e.jpg",
-          title: "Computers",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/4.1c054cc.jpg",
-          title: "Home $ Kitchen",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/5.cf89506.jpg",
-          title: "Health & Beauty",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/6.c7fe10e.jpg",
-          title: "Jewlry & Watch",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/7.8e65d3d.jpg",
-          title: "Technology Toys",
-        },
-        {
-          image: "http://vuestorefronts.com/_nuxt/img/8.24a3c9f.jpg",
-          title: "Mobile Phones",
-        },
-      ],
       dealOfTheDay: [
         {
           price: 555,

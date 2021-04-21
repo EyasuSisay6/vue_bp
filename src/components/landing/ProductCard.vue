@@ -1,7 +1,10 @@
 <template>
   <div>
-    <v-card elevation="0" width="250"
-      ><v-img :src="image" height="300"> </v-img>
+    <v-card
+      :color="$vuetify.theme.dark ? '#121212' : ''"
+      elevation="0"
+      :width="width"
+      ><v-img :src="image" :height="height"> </v-img>
       <p class="overline ma-0 pa-0">{{ shop }}</p>
       <v-divider class="mb-2 pa-0"></v-divider>
       <p class="h4 font-weight-bold ma-0" style="color:#09B750;">
@@ -61,6 +64,19 @@ export default {
       type: String,
       required: true,
     },
+    width: {
+      type: Number,
+      default: 250,
+    },
+    height: {
+      type: Number,
+      default: 300,
+    },
+  },
+  data() {
+    return {
+      sh: false,
+    };
   },
 };
 </script>

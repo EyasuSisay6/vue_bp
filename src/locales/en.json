@@ -122,6 +122,10 @@
     "TITLE": "About",
     "DESCRIPTION": "This page describes about Ashewa E-Commerce"
   },
+  "categories": {
+    "TITLE": "Categories",
+    "DESCRIPTION": "This page shows every "
+  },
   "login": {
     "TITLE": "Login",
     "DESCRIPTION": "This is a demo. Database resets every 30 mins. So anything you do will be lost after a short time.<br />E-mail: admin@admin.com <br />Password: 12345",

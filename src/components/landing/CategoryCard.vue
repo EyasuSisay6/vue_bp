@@ -1,5 +1,13 @@
 <template>
-  <div class="card">
+  <div
+    @click="
+      $router.push({
+        path: `/category/${id}`,
+      })
+    "
+    style="cursor: pointer;"
+    class="card"
+  >
     <v-card elevation="0" width="200" class="mx-auto">
       <v-img :src="image" width="150" class="mx-auto"></v-img>
       <p class="text-center overline pt-2 mb-0">{{ title }}</p>
@@ -16,6 +24,10 @@ export default {
     },
     image: {
       type: String,
+      required: true,
+    },
+    id: {
+      type: Number,
       required: true,
     },
   },
