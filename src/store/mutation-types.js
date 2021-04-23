@@ -32,3 +32,5 @@ export const TOTAL_CITIES = "TOTAL_CITIES";
 // Admin - Users
 export const USERS = "USERS";
 export const TOTAL_USERS = "TOTAL_USERS";
+// Wish - List
+export const REMOVE_PRODUCT_FROM_WISH_LIST = "REMOVE_PRODUCT_FROM_WISH_LIST";
