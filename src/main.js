@@ -9,9 +9,20 @@ import App from "@/App.vue";
 import router from "@/router";
 import { store } from "@/store";
 import VuetifyConfirm from "vuetify-confirm";
+import VueGeolocation from 'vue-browser-geolocation';
+import * as VueGoogleMaps from 'vue2-google-maps';
 
 Vue.config.productionTip = false;
 Vue.use(VuetifyConfirm, { vuetify });
+Vue.use(VueGeolocation);
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyA8TDowN2BVbHAYBemnplS6pDxKrCHJamE'
+  },
+  installComponents: false
+});
+
+Vue.component('google-map', VueGoogleMaps.Map);
 
 const app = new Vue({
   vuetify,
