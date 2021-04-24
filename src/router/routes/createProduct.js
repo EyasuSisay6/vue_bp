@@ -1,10 +1,10 @@
 export default [
   {
-    path: '/checkout',
-    name: 'checkout',
+    path: '/create-product',
+    name: 'createProduct',
     component: () =>
       import(
-        /* webpackChunkName: "landing" */ '@/components/Checkout.vue'
+        /* webpackChunkName: "landing" */ '@/components/product/CreateProduct.vue'
       ),
   },
 ];

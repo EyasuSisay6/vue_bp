@@ -9,7 +9,8 @@
         </transition>
       </v-container>
     </v-main>
-    <Footer />
+    <Footer/>
+    <!-- <BottomNavigation/> -->
   </v-app>
 </template>
 
@@ -17,6 +18,7 @@
 import Toolbar from '@/components/core/Toolbar.vue'
 import Loading from '@/components/core/Loading.vue'
 import Footer from '@/components/core/Footer.vue'
+// import BottomNavigation from '@/components/core/BottomNavigation.vue'
 
 export default {
   name: 'App',
@@ -62,7 +64,8 @@ export default {
   components: {
     Toolbar,
     Loading,
-    Footer
+    Footer,
+    // BottomNavigation
   },
   computed: {
     appTitle() {

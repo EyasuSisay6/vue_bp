@@ -17,7 +17,7 @@ Vue.use(VuetifyConfirm, { vuetify });
 Vue.use(VueGeolocation);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyA8TDowN2BVbHAYBemnplS6pDxKrCHJamE'
+    key: 'AIzaSyCxzefmtRVzQt3k-pT-L7yoqrthPZikOqk'
   },
   installComponents: false
 });
