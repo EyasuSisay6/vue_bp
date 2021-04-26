@@ -81,11 +81,20 @@ export default {
     }
   },
   mounted() {
-    // Request to API URL, getting response
+    // Request to API URL, getting 
+    axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
     axios
-      .get('https://www.cbr-xml-daily.ru/daily_json.js')
+      .get('https://www.cbr-xml-daily.ru/daily_json.js',
+      {
+        headers: {
+          // "Access-Control-Allow-Origin": "*",
+          // "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+          // "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
+        }
+      })
       .then(response => {
         this.valutes = response.data.Valute;
+        console.log(response.data.Valute);
         // Adding all charCodes to array
         for (let code in response.data.Valute) {
           this.countries.push(code)
