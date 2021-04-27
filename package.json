@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
     "remark-cli": "^9.0.0",
+    "shelljs": "^0.8.4",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.11",
     "vue-analytics": "^5.22.1",
@@ -24,7 +25,8 @@
     "vue2-google-maps": "^0.10.7",
     "vuetify": "^2.4.3",
     "vuetify-confirm": "^2.0.6",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "vuex-pathify": "^1.4.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -32,12 +34,20 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
+    "archiver": "^4.0.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.32.5",
     "sass-loader": "^10.1.1",
     "vue-browser-geolocation": "^1.8.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-chartist": "^2.3.1",
+    "vue-cli-plugin-vuetify": "^2.0.5",
+    "vue-template-compiler": "^2.6.11",
+    "vuetify-loader": "^1.4.3",
+    "webfontloader": "^1.6.28",
+    "webpack": "^4.43.0"
   }
 }

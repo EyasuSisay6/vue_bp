@@ -4,7 +4,7 @@ export default [
       name: 'ProductDetails',
       component: () =>
         import(
-          /* webpackChunkName: "landing" */ '@/components/ProductDetails.vue'
+           '@/components/ProductDetails.vue'
         ),
     },
   ];
