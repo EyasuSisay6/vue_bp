@@ -9,18 +9,21 @@ import App from "@/App.vue";
 import router from "@/router";
 import { store } from "@/store";
 import VuetifyConfirm from "vuetify-confirm";
-import VueGeolocation from 'vue-browser-geolocation';
+// import VueGeolocation from 'vue-browser-geolocation';
 import * as VueGoogleMaps from 'vue2-google-maps';
+import 'chartist/dist/chartist.min.css';
+
+Vue.use(require('vue-chartist'));
 
 Vue.config.productionTip = false;
 Vue.use(VuetifyConfirm, { vuetify });
-Vue.use(VueGeolocation);
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyCxzefmtRVzQt3k-pT-L7yoqrthPZikOqk'
-  },
-  installComponents: false
-});
+// Vue.use(VueGeolocation);
+// Vue.use(VueGoogleMaps, {
+//   load: {
+//     key: 'AIzaSyCxzefmtRVzQt3k-pT-L7yoqrthPZikOqk'
+//   },
+//   installComponents: false
+// });
 
 Vue.component('google-map', VueGoogleMaps.Map);
 

@@ -1,8 +1,13 @@
 import * as types from "@/store/mutation-types";
+
 import router from "@/router";
+
 import api from "@/services/api/auth";
+
 import { buildSuccess, handleError } from "@/utils/utils.js";
+
 import { addMinutes, format } from "date-fns";
+
 
 const MINUTES_TO_CHECK_FOR_TOKEN_REFRESH = 1440;
 
