@@ -11,6 +11,7 @@
             </p>
             <v-text-field
               background-color="#ebe9e9"
+              v-model="title"
               class="mb-0"
               height="50"
               solo
@@ -69,7 +70,9 @@
           <v-col cols="12">
             <v-row justify="center">
               <v-btn dark color="error" large class="mr-4">Cancel</v-btn>
-              <v-btn dark color="#09b750" large class="ml-4">Publish</v-btn>
+              <v-btn @click="onSubmit()" dark color="#09b750" large class="ml-4"
+                >Publish</v-btn
+              >
             </v-row>
           </v-col>
         </v-row>
@@ -104,11 +107,22 @@ export default {
   data() {
     return {
       image: null,
+      title: "",
+      showLoading: false,
       imageUrl:
         "https://cdn1.iconfinder.com/data/icons/facebook-ui/48/additional_icons-03-512.png",
     };
   },
   methods: {
+    onSubmit() {
+      console.log("Submitted");
+      this.$store.commit("SHOW_LOADING", true);
+      this.$store.commit("CREATE_CATEGORY", {
+        image: this.imageUrl,
+        title: this.title,
+      });
+      this.$store.commit("SHOW_LOADING", false);
+    },
     onPickFile() {
       this.$refs.fileInput.click();
     },

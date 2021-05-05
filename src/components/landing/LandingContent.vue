@@ -35,6 +35,7 @@
         <v-toolbar-title class="font-weight-bold"
           >Deal of the day</v-toolbar-title
         >
+        <Countdown></Countdown>
         <v-spacer></v-spacer>
         <v-btn text depressed>View All</v-btn>
       </v-app-bar>

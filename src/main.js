@@ -9,9 +9,15 @@ import App from "@/App.vue";
 import router from "@/router";
 import { store } from "@/store";
 import VuetifyConfirm from "vuetify-confirm";
+import * as VueGoogleMaps from "vue2-google-maps";
 
 Vue.config.productionTip = false;
 Vue.use(VuetifyConfirm, { vuetify });
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "",
+  },
+});
 
 const app = new Vue({
   vuetify,

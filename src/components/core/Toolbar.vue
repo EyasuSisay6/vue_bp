@@ -62,10 +62,15 @@
                   @mouseenter="color1 = 'white'"
                   @mouseleave="color1 = 'black'"
                 >
-                  <v-badge bottom overlap color="black" content="0"
-                    ><v-icon size="40" :color="color1"
-                      >mdi-chart-box-outline</v-icon
-                    ></v-badge
+                  <router-link :to="{ name: 'about' }"
+                    ><v-badge bottom overlap color="black" content="0"
+                      ><v-icon
+                        :style="`cursor: pointer; text-decoration:none;`"
+                        size="40"
+                        :color="color1"
+                        >mdi-chart-box-outline</v-icon
+                      ></v-badge
+                    ></router-link
                   >
                 </div>
 
@@ -74,10 +79,20 @@
                   @mouseenter="color2 = 'white'"
                   @mouseleave="color2 = 'black'"
                 >
-                  <v-badge bottom overlap color="black" content="0"
-                    ><v-icon size="40" :color="color2"
-                      >mdi-heart-outline</v-icon
-                    ></v-badge
+                  <router-link :to="{ name: 'whishList' }">
+                    <v-badge
+                      bottom
+                      overlap
+                      color="black"
+                      :content="`${totalWishList.length}`"
+                    >
+                      <v-icon
+                        :style="`cursor: pointer; text-decoration:none;`"
+                        size="40"
+                        :color="color2"
+                        >mdi-heart-outline</v-icon
+                      ></v-badge
+                    ></router-link
                   >
                 </div>
 
@@ -143,12 +158,20 @@
                   <v-menu open-on-hover bottom offset-y>
                     <template v-slot:activator="{ on, attrs }">
                       <div class="dropDownS" dark v-bind="attrs" v-on="on">
-                        <div class="pl-3">Shop by Department</div>
+                        <div class="pl-3">Shop by Category</div>
                       </div>
                     </template>
 
                     <v-list>
-                      <v-list-item v-for="(item, index) in items" :key="index">
+                      <v-list-item
+                        v-for="(item, index) in categories"
+                        :key="index"
+                        @click="
+                          $router.push({
+                            path: `/category/${item.id}`,
+                          })
+                        "
+                      >
                         <v-list-item-title>{{ item.title }}</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -159,14 +182,16 @@
             <v-col class="hidden-md-and-down" sm="4">
               <v-row>
                 <v-col>
-                  <v-menu open-on-hover bottom offset-y>
+                  <v-menu bottom offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                      <div class="dropDownB" dark v-bind="attrs" v-on="on">
-                        Home
-                        <v-icon color="black">
-                          mdi-chevron-down
-                        </v-icon>
-                      </div>
+                      <router-link
+                        style="text-decoration:none;"
+                        :to="{ name: 'home' }"
+                      >
+                        <div class="dropDownB" dark v-bind="attrs" v-on="on">
+                          Home
+                        </div>
+                      </router-link>
                     </template>
 
                     <v-list>
@@ -177,14 +202,16 @@
                   </v-menu>
                 </v-col>
                 <v-col>
-                  <v-menu open-on-hover bottom offset-y>
+                  <v-menu bottom offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                      <div class="dropDownB" dark v-bind="attrs" v-on="on">
-                        Shop
-                        <v-icon color="black">
-                          mdi-chevron-down
-                        </v-icon>
-                      </div>
+                      <router-link
+                        style="text-decoration:none;"
+                        :to="{ name: 'home' }"
+                      >
+                        <div class="dropDownB" dark v-bind="attrs" v-on="on">
+                          Shops
+                        </div>
+                      </router-link>
                     </template>
 
                     <v-list>
@@ -213,14 +240,16 @@
                   </v-menu>
                 </v-col>
                 <v-col>
-                  <v-menu open-on-hover bottom offset-y>
+                  <v-menu bottom offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                      <div class="dropDownB" dark v-bind="attrs" v-on="on">
-                        Blogs
-                        <v-icon color="black">
-                          mdi-chevron-down
-                        </v-icon>
-                      </div>
+                      <router-link
+                        style="text-decoration:none;"
+                        :to="{ name: 'home' }"
+                      >
+                        <div class="dropDownB" dark v-bind="attrs" v-on="on">
+                          Blogs
+                        </div>
+                      </router-link>
                     </template>
 
                     <v-list>
@@ -390,7 +419,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["appTitle", "isTokenSet", "user"]),
+    ...mapGetters([
+      "appTitle",
+      "isTokenSet",
+      "user",
+      "totalWishList",
+      "categories",
+    ]),
     admin() {
       return this.user !== null ? this.user.role === "admin" : false;
     },

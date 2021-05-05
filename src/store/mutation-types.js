@@ -34,3 +34,7 @@ export const USERS = "USERS";
 export const TOTAL_USERS = "TOTAL_USERS";
 // Wish - List
 export const REMOVE_PRODUCT_FROM_WISH_LIST = "REMOVE_PRODUCT_FROM_WISH_LIST";
+// Categories
+export const CREATE_CATEGORY = "CREATE_CATEGORY";
+export const EDIT_CATEGORY = "EDIT_CATEGORY";
+export const DELETE_CATEGORY = "DELETE_CATEGORY";

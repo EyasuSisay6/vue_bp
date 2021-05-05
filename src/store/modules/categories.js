@@ -1,8 +1,20 @@
+import * as types from "@/store/mutation-types";
+
 const getters = {
   categories: (state) => state.categories,
   totalCategories: (state) => state.totalCategories,
   getCategoryId: (state) => (id) => {
     return state.categories.find((category) => category.id == id);
+  },
+};
+
+const mutations = {
+  [types.CREATE_CATEGORY](state, value) {
+    state.categories.push({
+      image: value.image,
+      id: state.categories.length + 1,
+      title: value.title,
+    });
   },
 };
 
@@ -55,4 +67,5 @@ const state = {
 export default {
   state,
   getters,
+  mutations,
 };
