@@ -11,9 +11,16 @@
         {{ price }} ETB
       </p>
       <div>
-        <a href="" class="subtitle-2" style="text-decoration:none;">{{
-          title
-        }}</a>
+        <a
+          @click="
+            $router.push({
+              path: `/ProductDetails/${1}`,
+            })
+          "
+          class="subtitle-2"
+          style="text-decoration:none;"
+          >{{ title }}</a
+        >
       </div>
       <v-rating
         :value="rating"
@@ -24,13 +31,29 @@
       ></v-rating>
       <v-divider></v-divider>
       <v-row class="mt-1" justify="center">
-        <v-btn icon class="hover-icon" style=""
+        <v-btn
+          @click="addToCart({ image, price, title, id: 1 })"
+          icon
+          class="hover-icon"
+          style=""
           ><v-icon small>mdi-cart-outline</v-icon></v-btn
         >
-        <v-btn icon class="hover-icon" style=""
+        <v-btn
+          @click="
+            $router.push({
+              path: `/ProductDetails/${1}`,
+            })
+          "
+          icon
+          class="hover-icon"
+          style=""
           ><v-icon small>mdi-eye-outline</v-icon></v-btn
         >
-        <v-btn icon class="hover-icon" style=""
+        <v-btn
+          @click="addToWish({ image, price, title, id: 1 })"
+          icon
+          class="hover-icon"
+          style=""
           ><v-icon small>mdi-heart-outline</v-icon></v-btn
         >
         <v-btn icon class="hover-icon" style=""
@@ -77,6 +100,14 @@ export default {
     return {
       sh: false,
     };
+  },
+  methods: {
+    addToCart(product) {
+      this.$store.commit("ADD_PRODUCT_TO_CART_LIST", product);
+    },
+    addToWish(product) {
+      this.$store.commit("ADD_PRODUCT_TO_WISH_LIST", product);
+    },
   },
 };
 </script>

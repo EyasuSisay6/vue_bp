@@ -30,7 +30,9 @@
               <v-menu open-on-click bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <div class="dropDown" dark v-bind="attrs" v-on="on">
-                    <div class="pl-3">All</div>
+                    <div class="pl-3">
+                      {{ selected.length > 12 ? "All" : selected }}
+                    </div>
                     <v-icon color="#b5b5b5">
                       mdi-chevron-down
                     </v-icon>
@@ -38,7 +40,12 @@
                 </template>
 
                 <v-list>
-                  <v-list-item v-for="(item, index) in items" :key="index">
+                  <v-list-item
+                    style="cursor:pointer"
+                    @click="selected = item.title"
+                    v-for="(item, index) in categories"
+                    :key="index"
+                  >
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -64,10 +71,7 @@
                 >
                   <router-link :to="{ name: 'about' }"
                     ><v-badge bottom overlap color="black" content="0"
-                      ><v-icon
-                        :style="`cursor: pointer; text-decoration:none;`"
-                        size="40"
-                        :color="color1"
+                      ><v-icon size="40" :color="color1"
                         >mdi-chart-box-outline</v-icon
                       ></v-badge
                     ></router-link
@@ -101,10 +105,20 @@
                   @mouseenter="color3 = 'white'"
                   @mouseleave="color3 = 'black'"
                 >
-                  <v-badge bottom overlap color="black" content="0"
-                    ><v-icon size="40" :color="color3"
-                      >mdi-cart-outline</v-icon
-                    ></v-badge
+                  <router-link :to="{ name: 'ShoppingCart' }">
+                    <v-badge
+                      bottom
+                      overlap
+                      color="black"
+                      :content="`${totalCartList.length}`"
+                    >
+                      <v-icon
+                        :style="`cursor: pointer; text-decoration:none;`"
+                        size="40"
+                        :color="color3"
+                        >mdi-cart-outline</v-icon
+                      ></v-badge
+                    ></router-link
                   >
                 </div>
 
@@ -116,7 +130,7 @@
                     @mouseleave="color4 = 'black'"
                   >
                     <router-link
-                      :to="{ name: 'about' }"
+                      :to="{ name: 'login' }"
                       :style="
                         `color:${color4};cursor: pointer; text-decoration:none;`
                       "
@@ -128,7 +142,7 @@
                     @mouseleave="color5 = 'black'"
                   >
                     <router-link
-                      :to="{ name: 'about' }"
+                      :to="{ name: 'signup' }"
                       :style="
                         `color:${color5};cursor: pointer; text-decoration:none;`
                       "
@@ -182,44 +196,24 @@
             <v-col class="hidden-md-and-down" sm="4">
               <v-row>
                 <v-col>
-                  <v-menu bottom offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                      <router-link
-                        style="text-decoration:none;"
-                        :to="{ name: 'home' }"
-                      >
-                        <div class="dropDownB" dark v-bind="attrs" v-on="on">
-                          Home
-                        </div>
-                      </router-link>
-                    </template>
-
-                    <v-list>
-                      <v-list-item v-for="(item, index) in items" :key="index">
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
+                  <router-link
+                    style="text-decoration:none;"
+                    :to="{ name: 'landing' }"
+                  >
+                    <div class="dropDownB" dark>
+                      Home
+                    </div>
+                  </router-link>
                 </v-col>
                 <v-col>
-                  <v-menu bottom offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                      <router-link
-                        style="text-decoration:none;"
-                        :to="{ name: 'home' }"
-                      >
-                        <div class="dropDownB" dark v-bind="attrs" v-on="on">
-                          Shops
-                        </div>
-                      </router-link>
-                    </template>
-
-                    <v-list>
-                      <v-list-item v-for="(item, index) in items" :key="index">
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
+                  <router-link
+                    style="text-decoration:none;"
+                    :to="{ name: 'home' }"
+                  >
+                    <div class="dropDownB" dark>
+                      Shops
+                    </div>
+                  </router-link>
                 </v-col>
                 <v-col>
                   <v-menu open-on-hover bottom offset-y>
@@ -240,24 +234,14 @@
                   </v-menu>
                 </v-col>
                 <v-col>
-                  <v-menu bottom offset-y>
-                    <template v-slot:activator="{ on, attrs }">
-                      <router-link
-                        style="text-decoration:none;"
-                        :to="{ name: 'home' }"
-                      >
-                        <div class="dropDownB" dark v-bind="attrs" v-on="on">
-                          Blogs
-                        </div>
-                      </router-link>
-                    </template>
-
-                    <v-list>
-                      <v-list-item v-for="(item, index) in items" :key="index">
-                        <v-list-item-title>{{ item.title }}</v-list-item-title>
-                      </v-list-item>
-                    </v-list>
-                  </v-menu>
+                  <router-link
+                    style="text-decoration:none;"
+                    :to="{ name: 'home' }"
+                  >
+                    <div class="dropDownB" dark>
+                      Blogs
+                    </div>
+                  </router-link>
                 </v-col>
               </v-row>
             </v-col>
@@ -405,6 +389,7 @@ export default {
     return {
       isDark: false,
       sidebar: false,
+      selected: "All",
       color1: "black",
       color2: "black",
       color3: "black",
@@ -424,6 +409,7 @@ export default {
       "isTokenSet",
       "user",
       "totalWishList",
+      "totalCartList",
       "categories",
     ]),
     admin() {

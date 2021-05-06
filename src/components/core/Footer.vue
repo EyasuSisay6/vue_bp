@@ -1,28 +1,55 @@
 <template>
-  <v-footer fixed height="60" class="d-block text-center">
+  <v-footer height="60" class="d-block text-center">
     <div class="hidden-md-and-down">
       {{ appVersion }} - {{ $t("footer.MADE_WITH") }}
       <v-icon small class="red--text mx-0 px-0">mdi-cards-heart</v-icon>
       &nbsp;{{ $t("footer.BY") }}: Ashewa
     </div>
     <v-bottom-navigation
+      fixed
       class="hidden-lg-and-up"
       :value="value"
       color="#09B750"
       horizontal
     >
       <v-spacer></v-spacer>
-      <v-btn>
+      <v-btn
+        @click="
+          $router.push({
+            path: `/`,
+          })
+        "
+      >
         <v-icon color="#09B750">mdi-home</v-icon>
       </v-btn>
       <v-spacer></v-spacer>
 
-      <v-btn text>
-        <v-badge color="#09B750" content="0">
-          <v-icon color="#09B750">mdi-cart</v-icon>
+      <v-btn
+        @click="
+          $router.push({
+            path: '/wishList',
+          })
+        "
+        text
+      >
+        <v-badge color="#09B750" :content="`${totalWishList.length}`">
+          <v-icon color="#09B750">mdi-heart</v-icon>
         </v-badge>
       </v-btn>
 
+      <v-spacer></v-spacer>
+      <v-btn
+        @click="
+          $router.push({
+            name: 'ShoppingCart',
+          })
+        "
+        text
+      >
+        <v-badge color="#09B750" :content="`${totalCartList.length}`">
+          <v-icon color="#09B750">mdi-cart</v-icon>
+        </v-badge>
+      </v-btn>
       <v-spacer></v-spacer>
     </v-bottom-navigation>
   </v-footer>
@@ -35,10 +62,13 @@ export default {
     appVersion() {
       return this.$store.getters.appVersion;
     },
+    totalWishList() {
+      return this.$store.getters.totalWishList;
+    },
+    totalCartList() {
+      return this.$store.getters.totalCartList;
+    },
   },
 };
 </script>
-<style scoped>
-.mobileResp {
-}
-</style>
+<style scoped></style>

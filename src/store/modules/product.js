@@ -5,6 +5,9 @@ const getters = {
   electronics: (state) => state.products.slice(7, 13),
   clothings: (state) => state.products.slice(14, 20),
   home: (state) => state.products.slice(19, 25),
+  getProductId: (state) => (id) => {
+    return state.products[id];
+  },
 };
 
 const state = {

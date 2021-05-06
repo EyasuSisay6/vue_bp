@@ -1,6 +1,6 @@
 export default [
   {
-    path: "/whishList",
+    path: "/wishList",
     name: "whishList",
     component: () =>
       import(/* webpackChunkName: "landing" */ "@/components/WishList.vue"),

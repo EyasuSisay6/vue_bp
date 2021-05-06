@@ -6,11 +6,16 @@
       })
     "
     style="cursor: pointer;"
-    class="card"
   >
-    <v-card elevation="0" width="200" class="mx-auto">
-      <v-img :src="image" width="150" class="mx-auto"></v-img>
-      <p class="text-center overline pt-2 mb-0">{{ title }}</p>
+    <v-card width="250">
+      <v-img
+        :src="image"
+        class="white--text align-end"
+        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+        width="250"
+      >
+        <v-card-title v-text="title"></v-card-title>
+      </v-img>
     </v-card>
   </div>
 </template>
