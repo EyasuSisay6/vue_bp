@@ -12,7 +12,7 @@
           </v-carousel>
         </v-col>
 
-        <v-col cols="6" md="4" class="py-5 pl-5">
+        <v-col cols="12" md="4" class="py-5 pl-5">
           <div class="pb-5">
             <v-img
               src="http://vuestorefronts.com/img/slider/home-1/promotion-1.jpg"
@@ -64,7 +64,7 @@
     </section>
     <section id="second-ad">
       <v-row>
-        <v-col
+        <v-col cols="12" md="4"
           ><div class="pb-5">
             <v-img
               src="http://vuestorefronts.com/img/collection/home-1/1.jpg"
@@ -72,7 +72,7 @@
               height="190"
             ></v-img></div
         ></v-col>
-        <v-col
+        <v-col cols="12" md="4"
           ><div class="pb-5">
             <v-img
               src="http://vuestorefronts.com/img/collection/home-1/2.jpg"
@@ -80,7 +80,7 @@
               height="190"
             ></v-img></div
         ></v-col>
-        <v-col
+        <v-col cols="12" md="4"
           ><div class="pb-5">
             <v-img
               src="http://vuestorefronts.com/img/collection/home-1/3.jpg"
@@ -101,7 +101,7 @@
       <div class="mx-4 my-5">
         <v-row>
           <v-col
-            cols="8"
+            cols="6"
             lg="3"
             md="4"
             sm="6"

@@ -84,7 +84,7 @@ export const handleError = (error, commit, reject) => {
   } else {
     // Any other error
     errMsg = error.response
-      ? error.response.data.errors.msg
+      ? error.response.statusText
       : "SERVER_TIMEOUT_CONNECTION_ERROR";
     setTimeout(() => {
       return errMsg

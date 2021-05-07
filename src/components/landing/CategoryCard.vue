@@ -14,7 +14,10 @@
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         width="250"
       >
-        <v-card-title v-text="title"></v-card-title>
+        <v-card-title
+          class="text-md-h6 text-subtitle-2"
+          v-text="title"
+        ></v-card-title>
       </v-img>
     </v-card>
   </div>

@@ -1,10 +1,8 @@
 <template>
   <v-app>
-    
-      <v-main>
-        <ShoppingCart />
-      </v-main>
-      
+    <v-main>
+      <ShoppingCart />
+    </v-main>
   </v-app>
 </template>
 
