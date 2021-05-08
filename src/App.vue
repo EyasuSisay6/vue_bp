@@ -86,10 +86,10 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-darkB {
+.darkB {
   background-color: #121212;
 }
-lightB {
+.lightB {
   background-color: white;
 }
 </style>
