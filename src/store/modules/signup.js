@@ -1,43 +1,48 @@
-import * as types from '@/store/mutation-types'
-import router from '@/router'
-import api from '@/services/api/signup'
-import { buildSuccess, handleError } from '@/utils/utils.js'
+import * as types from "@/store/mutation-types";
+
+import { createProvider } from "../../vue-apollo";
+import { handleError } from "@/utils/utils.js";
+import { gql } from "graphql-tag";
+
+let apolloClient = createProvider().defaultClient;
 
 const actions = {
-  userSignUp({ commit }, payload) {
-    return new Promise((resolve, reject) => {
-      commit(types.SHOW_LOADING, true)
-      api
-        .userSignUp(payload)
-        .then((response) => {
-          if (response.status === 201) {
-            window.localStorage.setItem(
-              'user',
-              JSON.stringify(response.data.user)
-            )
-            window.localStorage.setItem(
-              'token',
-              JSON.stringify(response.data.token)
-            )
-            commit(types.SAVE_USER, response.data.user)
-            commit(types.SAVE_TOKEN, response.data.token)
-            buildSuccess(
-              null,
-              commit,
-              resolve,
-              router.push({
-                name: 'home'
-              })
-            )
+  async userSignUp(ctx, payload) {
+    ctx.commit(types.SHOW_LOADING, true);
+    const resp = await apolloClient
+      .mutate({
+        mutation: gql`
+          mutation {
+            newUser(
+              email: "${payload.email}"
+              fullName: "${payload.name}"
+              password: "${payload.password}"
+            ) {
+              payload {
+                username
+                firstName
+                lastName
+                isStaff
+                userId
+                phone
+                password
+              }
+            }
           }
-        })
-        .catch((error) => {
-          handleError(error, commit, reject)
-        })
-    })
-  }
-}
+        `,
+      })
+      .then(() => {
+        ctx.dispatch("userLogin", {
+          email: payload.email,
+          password: payload.password,
+        });
+      })
+      .catch((error) => {
+        handleError(error, ctx.commit, resp);
+      });
+  },
+};
 
 export default {
-  actions
-}
+  actions,
+};

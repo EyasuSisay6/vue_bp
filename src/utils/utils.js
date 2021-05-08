@@ -72,42 +72,37 @@ export const buildPayloadPagination = (pagination, search) => {
 };
 
 // Catches error connection or any other error (checks if error.response exists)
-export const handleError = (error, commit, reject) => {
+export const handleError = (error, commit) => {
+  console.log({ ...error });
   let errMsg = "";
   // Resets errors in store
   commit(types.SHOW_LOADING, false);
   commit(types.ERROR, null);
 
   // Checks if unauthorized
-  if (error.response.status === 401) {
-    store.dispatch("userLogout");
-  } else {
-    // Any other error
-    errMsg = error.response
-      ? error.response.statusText
+  // if (error.response.status === 401) {
+  //   store.dispatch("userLogout");
+  // } else {
+  // Any other error
+  errMsg =
+    error.graphQLErrors.length > 0
+      ? error.graphQLErrors[0].message
       : "SERVER_TIMEOUT_CONNECTION_ERROR";
-    setTimeout(() => {
-      return errMsg
-        ? commit(types.ERROR, errMsg)
-        : commit(types.SHOW_ERROR, false);
-    }, 0);
-  }
-  reject(error);
+  setTimeout(() => {
+    return errMsg
+      ? commit(types.ERROR, errMsg)
+      : commit(types.SHOW_ERROR, false);
+  }, 0);
+  // }
 };
 
-export const buildSuccess = (
-  msg,
-  commit,
-  resolve,
-  resolveParam = undefined
-) => {
+export const buildSuccess = (msg, commit) => {
   commit(types.SHOW_LOADING, false);
   commit(types.SUCCESS, null);
   setTimeout(() => {
     return msg ? commit(types.SUCCESS, msg) : commit(types.SHOW_SUCCESS, false);
   }, 0);
   commit(types.ERROR, null);
-  resolve(resolveParam);
 };
 
 // Checks if tokenExpiration in localstorage date is past, if so then trigger an update

@@ -124,7 +124,17 @@
 
                 <v-spacer></v-spacer>
                 <v-icon size="40" color="black">mdi-account-outline</v-icon>
-                <div class="innerAuth">
+                <v-btn
+                  v-if="isTokenSet"
+                  @click="userLogout"
+                  text
+                  @mouseenter="color4 = 'white'"
+                  @mouseleave="color4 = 'black'"
+                  :color="color4"
+                >
+                  Logout</v-btn
+                >
+                <div v-if="!isTokenSet" class="innerAuth">
                   <div
                     @mouseenter="color4 = 'white'"
                     @mouseleave="color4 = 'black'"

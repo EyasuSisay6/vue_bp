@@ -10,6 +10,7 @@ import router from "@/router";
 import { store } from "@/store";
 import VuetifyConfirm from "vuetify-confirm";
 import * as VueGoogleMaps from "vue2-google-maps";
+import { createProvider } from './vue-apollo'
 
 Vue.config.productionTip = false;
 Vue.use(VuetifyConfirm, { vuetify });
@@ -25,12 +26,14 @@ const app = new Vue({
   store,
   i18n,
   render: (h) => h(App),
+  apolloProvider: createProvider(),
+
   created() {
     store.dispatch("setLocale", store.getters.locale);
     if (store.getters.isTokenSet) {
       store.dispatch("autoLogin");
     }
-  },
+  }
 }).$mount("#app");
 
 if (window.Cypress) {
