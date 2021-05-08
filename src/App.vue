@@ -3,7 +3,11 @@
     <Toolbar />
     <v-main class="text-center">
       <loading />
-      <v-container class="pa-0" fluid>
+      <v-container
+        :class="$vuetify.theme.dark ? 'darkB' : 'lightB'"
+        class="pa-0"
+        fluid
+      >
         <transition name="fade" mode="out-in">
           <router-view />
         </transition>
@@ -81,5 +85,11 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+darkB {
+  background-color: #121212;
+}
+lightB {
+  background-color: white;
 }
 </style>
