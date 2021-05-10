@@ -9,9 +9,14 @@
       <v-row class="text-center">
         <v-container class="" fluid>
           <v-row justify="center">
-            <v-col cols="12" md="6" sm="10" align-self="center">
+            <v-col cols="11" md="6" sm="10" align-self="start">
               <v-row justify="center">
-                <v-carousel>
+                <v-carousel
+                  class="hidden-sm-and-down"
+                  hide-delimiters
+                  height="400"
+                  show-arrows-on-hover
+                >
                   <v-carousel-item
                     v-for="image in sellImages"
                     :key="image.path"
@@ -20,6 +25,34 @@
                     transition="fade-transition"
                   ></v-carousel-item>
                 </v-carousel>
+                <v-carousel
+                  class="hidden-md-and-up"
+                  hide-delimiters
+                  height="250"
+                  show-arrows-on-hover
+                >
+                  <v-carousel-item
+                    v-for="image in sellImages"
+                    :key="image.path"
+                    :src="image.path"
+                    reverse-transition="fade-transition"
+                    transition="fade-transition"
+                  ></v-carousel-item>
+                </v-carousel>
+              </v-row>
+              <v-row justify="center">
+                <v-col
+                  class="imgB"
+                  cols="2"
+                  v-for="image in sellImages"
+                  :key="image.path"
+                >
+                  <v-img
+                    width="40px"
+                    height="40px"
+                    src="/images/test.jpg"
+                  ></v-img>
+                </v-col>
               </v-row>
             </v-col>
 
@@ -32,7 +65,7 @@
                 </v-row>
                 <v-row justify="start" class="ma-4">
                   <span> Brand: </span>
-                  <span class="blue--text ml-2 mr-2"> {{ seller }} </span>
+                  <span class="green--text ml-2 mr-2"> {{ seller }} </span>
                   |
                   <v-rating
                     v-model="rating"
@@ -50,13 +83,13 @@
                   <span class="mt-1 text-decoration-line-through">
                     {{ oldPrice }}
                   </span>
-                  <h3 class="ml-2 red--text">
+                  <h3 class="ml-2 green--text">
                     {{ newPrice }}
                   </h3>
                 </v-row>
                 <v-row justify="start" class="ma-4">
                   <span class="mr-2">Sold By:</span>
-                  <span class="text-uppercase blue--text"> {{ seller }} </span>
+                  <span class="text-uppercase green--text"> {{ seller }} </span>
                 </v-row>
                 <v-row class="text-left">
                   <v-list>
@@ -70,38 +103,11 @@
                     </v-list-item>
                   </v-list>
                 </v-row>
-                <v-row justify="start" class="my-2">
-                  <v-col cols="6" sm="6">
-                    <v-btn
-                      rounded
-                      elevation="1"
-                      color="primary"
-                      height="40"
-                      min-width="150"
-                      class="btn"
-                    >
-                      Send Inquery</v-btn
-                    >
-                  </v-col>
-                  <v-col cols="6" sm="6">
-                    <v-btn
-                      rounded
-                      elevation="1"
-                      color="amber lighten-4 primary--text"
-                      height="40"
-                      min-width="150"
-                      class="btn"
-                    >
-                      <v-icon> mdi-message-text </v-icon>
-                      Chat Now
-                    </v-btn>
-                  </v-col>
-                </v-row>
                 <v-divider></v-divider>
                 <v-row class="my-4">
                   <v-col cols="12" sm="12" md="12" lg="3" class="">
                     <v-card elevation="0" :width="width + '%'">
-                      <div class="text-left">
+                      <div class="imgB">
                         <span class="">Quantity</span>
                       </div>
                       <v-row>
@@ -130,7 +136,8 @@
                   >
                     <v-btn
                       depressed
-                      color="secondary"
+                      color="#09b750"
+                      dark
                       height="40"
                       class="btn"
                       :width="width + '%'"
@@ -148,7 +155,8 @@
                   >
                     <v-btn
                       depressed
-                      color="primary"
+                      color="#09b750"
+                      dark
                       height="40"
                       class="btn"
                       :width="width + '%'"
@@ -164,16 +172,6 @@
                     class="text-center"
                     :class="'mt-' + marginTop"
                   >
-                    <v-btn
-                      icon
-                      @click="favorited = !favorited"
-                      :width="width + '%'"
-                    >
-                      <v-icon large v-if="favorited" color="primary">
-                        mdi-heart
-                      </v-icon>
-                      <v-icon large v-else> mdi-heart-outline </v-icon>
-                    </v-btn>
                   </v-col>
                 </v-row>
                 <v-divider></v-divider>
@@ -181,265 +179,13 @@
             </v-col>
           </v-row>
         </v-container>
-
-        <v-col cols="12" class="">
-          <v-row justify="center">
-            <v-col cols="12" md="8" sm="10">
-              <v-card>
-                <v-bottom-sheet v-model="sheet">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-card v-bind="attrs" v-on="on">
-                      <v-row justify="start" class="my-2">
-                        <v-col cols="8" class="text-left pl-8">
-                          <h4>Quick Access</h4>
-                        </v-col>
-                        <v-col cols="4" class="text-right pr-8">
-                          <v-icon> mdi-chevron-right </v-icon>
-                        </v-col>
-                      </v-row>
-                    </v-card>
-                  </template>
-                  <v-list>
-                    <v-subheader> Quick Accesss </v-subheader>
-                    <v-list-item v-for="info in data" :key="info.property">
-                      <v-list-item-title>
-                        <v-row justify="start">
-                          <!-- <v-col cols="2"></v-col> -->
-                          <v-col cols="6" class="text-left">
-                            {{ info.property }}
-                          </v-col>
-                          <v-col cols="6" class="text-left">
-                            {{ info.value_ }}
-                          </v-col>
-                        </v-row>
-                      </v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-bottom-sheet>
-                <v-container
-                  class="pl-8"
-                  v-for="info in data"
-                  :key="info.property"
-                >
-                  <v-row justify="start">
-                    <v-col cols="6" class="text-left">
-                      <span>{{ info.property }}</span>
-                    </v-col>
-                    <v-col cols="6" class="text-left">
-                      <span>{{ info.value_ }}</span>
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col cols="12" class="my-5">
-          <v-row justify="center">
-            <v-col cols="12" md="8" sm="10" class="">
-              <v-card class="">
-                <v-card class="pa-6">
-                  <v-row justify="start" class="">
-                    <h4>Lead Time</h4>
-                  </v-row>
-                </v-card>
-
-                <v-container v-for="data in leadData" :key="data.units">
-                  <v-row justify="start">
-                    <v-col cols="" class="text-left">
-                      {{ data.units }}
-                    </v-col>
-                    <v-col cols="" class="text-left">
-                      {{ data.days }}
-                    </v-col>
-                  </v-row>
-                </v-container>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col cols="12">
-          <v-row justify="center" class="">
-            <v-col cols="12" md="8" sm="10">
-              <v-card class="pa-4" color="indigo lighten-5">
-                <v-row justify="space-between" class="mt-1">
-                  <v-col cols="6" class="text-left">
-                    <h3>Grassel GmbH</h3>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-icon color="orange">mdi-medal</v-icon>
-                    <span> Gold Supplier </span>
-                  </v-col>
-                </v-row>
-
-                <v-row justify="space-around" style="width: 150px">
-                  <country-flag country="et" size="normal" />
-                  <span> AT </span>
-                  <span> 2YRS </span>
-                </v-row>
-
-                <v-row justify="space-between" class="mt-5">
-                  <v-col class="text-left">
-                    <h3>>=24h</h3>
-                    <span class="">Response Time</span>
-                  </v-col>
-                  <v-col>
-                    <h3>-</h3>
-                    <span class="">On-time delivery rate</span>
-                  </v-col>
-                  <v-col class="text-right">
-                    <h3>-</h3>
-                    <span class="">Transactions</span>
-                  </v-col>
-                </v-row>
-
-                <v-row justify="space-between" class="my-5">
-                  <v-col class="text-left">
-                    <h3>11-50</h3>
-                    <span class="">Employees</span>
-                  </v-col>
-                  <v-col>
-                    <h3>1-4</h3>
-                    <span class="">R&D staffs</span>
-                  </v-col>
-                  <v-col class="text-right">
-                    <h3>-</h3>
-                    <span class="">patents</span>
-                  </v-col>
-                </v-row>
-
-                <v-row justify="center" class="my-3">
-                  <v-col cols="6">
-                    <v-btn rounded color="primary" min-width="150" class="btn">
-                      Follow
-                    </v-btn>
-                  </v-col>
-                  <v-col cols="6">
-                    <v-btn rounded color="primary" min-width="150" class="btn">
-                      Visit Store
-                    </v-btn>
-                  </v-col>
-                </v-row>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col cols="12">
-          <v-row justify="center">
-            <v-col cols="12" md="8" sm="12">
-              <v-card flat>
-                <v-tabs v-model="tab" centered class="">
-                  <v-tabs-slider></v-tabs-slider>
-                  <v-tab href="#tab-1" class="case"> Select For You </v-tab>
-                  <v-col cols="2"></v-col>
-                  <v-tab href="#tab-2" class="case"> Hot Selling </v-tab>
-                </v-tabs>
-                <v-tabs-items v-model="tab">
-                  <v-tab-item v-for="i in 2" :key="i" :value="'tab-' + i">
-                    <v-container v-if="i === 1">
-                      <v-col cols="12">
-                        <v-row justify="center">
-                          <v-col
-                            cols="4"
-                            md="4"
-                            sm="4"
-                            v-for="data in recommended"
-                            :key="data.src"
-                          >
-                            <v-card class="mx-auto my-6" width="250">
-                              <v-img
-                                :src="data.src"
-                                height="130"
-                                max-width="auto"
-                              ></v-img>
-                              <v-card-text class="py-0 text-left">
-                                <h4>{{ data.price }}</h4>
-                                <h4>{{ data.quantity }}</h4>
-                              </v-card-text>
-                            </v-card>
-                          </v-col>
-                        </v-row>
-                      </v-col>
-                    </v-container>
-
-                    <v-col cols="12" v-if="i === 2">
-                      <v-row justify="center">
-                        <v-col
-                          cols="4"
-                          md="4"
-                          sm="4"
-                          v-for="data in hotSelling"
-                          :key="data.src"
-                        >
-                          <v-card class="mx-auto my-6" width="250">
-                            <v-img
-                              :src="data.src"
-                              height="130"
-                              max-width="auto"
-                            ></v-img>
-                            <v-card-text class="py-0 text-left">
-                              <h4>{{ data.price }}</h4>
-                              <h4>{{ data.quantity }}</h4>
-                            </v-card-text>
-                          </v-card>
-                        </v-col>
-                      </v-row>
-                    </v-col>
-                  </v-tab-item>
-                </v-tabs-items>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-col>
-
-        <v-col cols="12">
-          <v-row justify="center">
-            <v-col cols="12" sm="10" md="10">
-              <v-row justify="center">
-                <v-col cols="12" md="6" sm="6">
-                  <v-btn
-                    rounded
-                    elevation="0.5"
-                    color="amber lighten-4 primary--text"
-                    height="45"
-                    :width="btnWidth + '%'"
-                    class="btn"
-                  >
-                    <v-icon class="mr-2"> mdi-message-text </v-icon>
-                    Chat Now
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" md="6" sm="6">
-                  <v-btn
-                    rounded
-                    elevation="0.5"
-                    color="primary"
-                    height="45"
-                    :width="btnWidth + '%'"
-                    class="btn"
-                  >
-                    <v-icon class="mr-2"> mdi-email-outline </v-icon>
-                    Send Inquery
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-        </v-col>
       </v-row>
     </v-container>
   </v-app>
 </template>
 
 <script>
-import CountryFlag from "vue-country-flag";
 export default {
-  components: {
-    CountryFlag,
-  },
   props: {
     product: Object,
   },
@@ -550,27 +296,19 @@ export default {
           desc:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Lorem ipsum dolor sit, amet consectetur adipisicing",
         },
-        {
-          desc:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum dolor sit, amet consectetur adipisicing elit",
-        },
       ],
       sellImages: [
         {
-          path:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
+          path: "/images/test.jpg",
         },
         {
-          path:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
+          path: "/images/test.jpg",
         },
         {
-          path:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
+          path: "/images/test.jpg",
         },
         {
-          path:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
+          path: "/images/test.jpg",
         },
       ],
     };
@@ -678,5 +416,7 @@ export default {
 
 .favorite {
   cursor: pointer;
+}
+.imgB {
 }
 </style>

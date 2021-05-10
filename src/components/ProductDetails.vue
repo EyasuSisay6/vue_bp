@@ -1,16 +1,12 @@
 <template>
   <v-app id="inspire">
     <v-main>
-      Test
-      {{ product }}
       <Overview id="overview" :product="product" ref="overview" />
-      <Details id="details" ref="details" />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Details from "@/components/product/Details.vue";
 import Overview from "@/components/product/Overview";
 export default {
   data() {
@@ -27,7 +23,6 @@ export default {
   },
   components: {
     Overview,
-    Details,
   },
   methods: {
     scrollMeTo(refName) {

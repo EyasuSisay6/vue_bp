@@ -140,7 +140,7 @@
                     @mouseleave="color4 = 'black'"
                   >
                     <router-link
-                      :to="{ name: 'login' }"
+                      :to="{ route: '/login' }"
                       :style="
                         `color:${color4};cursor: pointer; text-decoration:none;`
                       "

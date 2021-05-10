@@ -2,7 +2,7 @@
   <v-app>
     <v-container class="mt-2">
       <v-row class="mt-5" justify="center">
-        <v-col cols="8">
+        <v-col cols="12" md="8">
           <v-row justify="end">
             <v-col><h1 class="mx-auto text-h4 mb-4">Shopping Cart</h1></v-col>
           </v-row>
@@ -13,7 +13,7 @@
             :items-per-page="3"
           >
             <template v-slot:item.image="{ item }">
-              <v-img height="100" width="100" :src="item.image"></v-img>
+              <v-img height="200" width="200" :src="item.image"></v-img>
             </template>
             <template v-slot:item.action="{ item }">
               <v-btn @click="removeProduct(item.productId)" small color="error">
