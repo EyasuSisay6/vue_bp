@@ -8,8 +8,12 @@
         class="pa-0"
         fluid
       >
-        <transition name="fade" mode="out-in">
-          <router-view />
+        <transition
+          :class="$vuetify.theme.dark ? 'darkB' : 'lightB'"
+          name="fade"
+          mode="out-in"
+        >
+          <router-view :class="$vuetify.theme.dark ? 'darkB' : 'lightB'" />
         </transition>
       </v-container>
     </v-main>
