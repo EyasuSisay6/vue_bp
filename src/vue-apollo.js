@@ -14,13 +14,13 @@ const AUTH_TOKEN = "apollo-token";
 
 // Http endpoint
 const httpEndpoint =
-  process.env.VUE_APP_GRAPHQL_HTTP ||
-  "https://ashewa-ecommerce.herokuapp.com/graphql/";
+  process.env.VUE_APP_GRAPHQL_HTTP || "http://188.166.153.99/graphql/";
 
 const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = JSON.parse(localStorage.getItem("apollo-token"));
   // Return the headers to the context so httpLink can read them
+
   return {
     headers: {
       ...headers,

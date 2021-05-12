@@ -4,26 +4,30 @@
       :color="$vuetify.theme.dark ? '#121212' : ''"
       elevation="0"
       :width="width"
-      ><v-img :src="image" :height="height"> </v-img>
-      <p class="overline ma-0 pa-0">{{ shop }}</p>
+      ><v-img
+        :src="`http://188.166.153.99/media/${productImages[0].image}`"
+        :height="height"
+      >
+      </v-img>
+      <p class="overline ma-0 pa-0">{{ vendor.vendorName }}</p>
       <v-divider class="mb-2 pa-0"></v-divider>
       <p class="h4 font-weight-bold ma-0" style="color:#09B750;">
-        {{ price }} ETB
+        {{ sellingPrice }} ETB
       </p>
       <div>
         <a
           @click="
             $router.push({
-              path: `/ProductDetails/${1}`,
+              path: `/ProductDetails/${productId}`,
             })
           "
           class="subtitle-2"
           style="text-decoration:none;"
-          >{{ title }}</a
+          >{{ productName }}</a
         >
       </div>
       <v-rating
-        :value="rating"
+        :value="5"
         readonly
         background-color="green lighten-3"
         color="#09B750"
@@ -32,7 +36,15 @@
       <v-divider></v-divider>
       <v-row class="mt-1" justify="center">
         <v-btn
-          @click="addToCart({ image, price, title, id: 1 })"
+          @click="
+            addToCart({
+              image: productImages[0].image,
+              price: sellingPrice,
+              title: productName,
+              id: productId,
+              category: productCategory.categoryName,
+            })
+          "
           icon
           class="hover-icon"
           style=""
@@ -41,7 +53,7 @@
         <v-btn
           @click="
             $router.push({
-              path: `/ProductDetails/${1}`,
+              path: `/ProductDetails/${productId}`,
             })
           "
           icon
@@ -50,7 +62,15 @@
           ><v-icon small>mdi-eye-outline</v-icon></v-btn
         >
         <v-btn
-          @click="addToWish({ image, price, title, id: 1 })"
+          @click="
+            addToWish({
+              image: productImages[0].image,
+              price: sellingPrice,
+              title: productName,
+              id: productId,
+              category: productCategory.categoryName,
+            })
+          "
           icon
           class="hover-icon"
           style=""
@@ -67,24 +87,28 @@
 <script>
 export default {
   props: {
-    shop: {
-      type: String,
+    vendor: {
+      type: Object,
       required: true,
     },
-    price: {
+    sellingPrice: {
       type: Number,
       required: true,
     },
-    rating: {
-      type: Number,
-      required: true,
-    },
-    title: {
+    productId: {
       type: String,
       required: true,
     },
-    image: {
+    productName: {
       type: String,
+      required: true,
+    },
+    productImages: {
+      type: Array,
+      required: true,
+    },
+    productCategory: {
+      type: Object,
       required: true,
     },
     width: {

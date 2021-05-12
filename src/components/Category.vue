@@ -14,11 +14,11 @@
             <div
               class="my-1"
               style="cursor: pointer;"
-              v-for="(item, i) in categories"
-              :key="i"
+              v-for="item in categories"
+              :key="item.pcatId"
               :src="item.src"
             >
-              {{ item.title }}
+              {{ item.parentCatName }}
             </div>
           </div>
         </v-row>
@@ -30,11 +30,11 @@
             <div class="mb-4" style="font-size:20px;">BY BRANDS</div>
             <v-checkbox
               class="my-0"
-              v-for="(item, i) in categories"
-              :key="i"
+              v-for="item in categories"
+              :key="item.pcatId"
               :src="item.src"
               v-model="checkbox1"
-              :label="item.title"
+              :label="item.parentCatName"
             ></v-checkbox>
           </div>
         </v-row>
@@ -54,15 +54,15 @@
             >
               <v-slide-item
                 class="mr-5 mb-4"
-                v-for="(n, i) in dealOfTheDay"
+                v-for="(n, i) in filteredProducts"
                 :key="i"
               >
                 <ProductCard
-                  shop="Ashewa Store"
-                  title="Lorem, ipsum dolor consectetur"
-                  :image="n.image"
-                  :price="n.price"
-                  :rating="3"
+                  :vendor="n.vendor"
+                  :productName="n.productName"
+                  :productImages="n.productImages"
+                  :sellingPrice="n.sellingPrice"
+                  :productId="n.productId"
                   :width="150"
                   :height="150"
                 />
@@ -84,15 +84,15 @@
             >
               <v-slide-item
                 class="mr-5 mb-4"
-                v-for="(n, i) in dealOfTheDay"
+                v-for="(n, i) in filteredProducts"
                 :key="i"
               >
                 <ProductCard
-                  shop="Ashewa Store"
-                  title="Lorem, ipsum dolor consectetur"
-                  :image="n.image"
-                  :price="n.price"
-                  :rating="3"
+                  :vendor="n.vendor"
+                  :productName="n.productName"
+                  :productImages="n.productImages"
+                  :sellingPrice="n.sellingPrice"
+                  :productId="n.productId"
                   :width="150"
                   :height="150"
                 />
@@ -109,7 +109,7 @@
                   ? 'background-color:#121212'
                   : 'background-color:#F5F5F5;'
               "
-              ><div class="mt-3">85 Products found</div>
+              ><div class="mt-3">{{ `${all.length}` }} Products found</div>
               <v-spacer></v-spacer>
               <v-menu open-on-click bottom offset-y>
                 <template v-slot:activator="{ on, attrs }">
@@ -136,13 +136,13 @@
               </v-menu>
             </v-row>
             <v-row>
-              <v-col md="3" v-for="(item, index) in 12" :key="index">
+              <v-col md="3" v-for="(n, index) in all" :key="index">
                 <ProductCard
-                  shop="Ashewa Store"
-                  title="Lorem, ipsum dolor consectetur"
-                  :image="all[index].image"
-                  :price="all[index].price"
-                  :rating="3"
+                  :vendor="n.vendor"
+                  :productName="n.productName"
+                  :productImages="n.productImages"
+                  :sellingPrice="n.sellingPrice"
+                  :productId="n.productId"
                   :width="150"
                   :height="150"
                 />
@@ -161,15 +161,33 @@ export default {
   components: {
     ProductCard,
   },
+  created() {
+    this.getFilteredProducts();
+  },
+  methods: {
+    async getFilteredProducts() {
+      await this.$store.dispatch("filterProducts", {
+        pcat: this.$route.params.id,
+        page: 1,
+        pageSize: 6,
+        ranged: false,
+        minP: 0,
+        maxP: 1000000,
+      });
+    },
+  },
   computed: {
     category() {
       return this.$store.getters.getCategoryId(this.$route.params.id);
+    },
+    filteredProducts() {
+      return this.$store.getters.filteredProducts;
     },
     categories() {
       return this.$store.getters.categories;
     },
     dealOfTheDay() {
-      return this.$store.getters.dealOfTheDay;
+      return this.$store.getters.products;
     },
     all() {
       return this.$store.getters.products;
@@ -185,6 +203,8 @@ export default {
         "sort by latest",
         "sort by latest",
       ],
+      checkbox1: null,
+      model: null,
     };
   },
 };

@@ -18,9 +18,9 @@
                   show-arrows-on-hover
                 >
                   <v-carousel-item
-                    v-for="image in sellImages"
-                    :key="image.path"
-                    :src="image.path"
+                    v-for="image in product.productImages"
+                    :key="image.image"
+                    :src="`http://188.166.153.99/media/${image.image}`"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
                   ></v-carousel-item>
@@ -32,9 +32,9 @@
                   show-arrows-on-hover
                 >
                   <v-carousel-item
-                    v-for="image in sellImages"
-                    :key="image.path"
-                    :src="image.path"
+                    v-for="image in product.productImages"
+                    :key="image.image"
+                    :src="`http://188.166.153.99/media/${image.image}`"
                     reverse-transition="fade-transition"
                     transition="fade-transition"
                   ></v-carousel-item>
@@ -44,13 +44,13 @@
                 <v-col
                   class="imgB"
                   cols="2"
-                  v-for="image in sellImages"
-                  :key="image.path"
+                  v-for="image in product.productImages"
+                  :key="image.image"
                 >
                   <v-img
                     width="40px"
                     height="40px"
-                    src="/images/test.jpg"
+                    :src="`http://188.166.153.99/media/${image.image}`"
                   ></v-img>
                 </v-col>
               </v-row>
@@ -60,12 +60,14 @@
               <v-container>
                 <v-row justify="start" class="ml-4 text-left">
                   <div class="headline">
-                    Lorem ipsum dolor sit amet consectetur
+                    {{ product.productName }}
                   </div>
                 </v-row>
                 <v-row justify="start" class="ma-4">
                   <span> Brand: </span>
-                  <span class="green--text ml-2 mr-2"> {{ seller }} </span>
+                  <span class="green--text ml-2 mr-2">
+                    {{ product.vendor.storName }}
+                  </span>
                   |
                   <v-rating
                     v-model="rating"
@@ -76,29 +78,30 @@
                     hover
                     size="18"
                   ></v-rating>
-                  <span class="caption ml-2 mt-1">({{ rating }} review)</span>
+                  <span class="caption ml-2 mt-1">({{ 3 }} review)</span>
                 </v-row>
                 <v-divider></v-divider>
                 <v-row justify="start" class="ma-4">
                   <span class="mt-1 text-decoration-line-through">
-                    {{ oldPrice }}
+                    {{ product.dealerPrice }}
                   </span>
                   <h3 class="ml-2 green--text">
-                    {{ newPrice }}
+                    {{ product.sellingPrice }}
                   </h3>
                 </v-row>
                 <v-row justify="start" class="ma-4">
                   <span class="mr-2">Sold By:</span>
-                  <span class="text-uppercase green--text"> {{ seller }} </span>
+                  <span class="text-uppercase green--text">
+                    {{ product.vendor.storeName }}
+                  </span>
                 </v-row>
                 <v-row class="text-left">
                   <v-list>
-                    <v-list-item v-for="desc in description" :key="desc.desc">
+                    <v-list-item v-for="desc in 1" :key="desc">
                       <v-list-item-icon>
                         <v-icon> mdi-circle-small </v-icon>
                       </v-list-item-icon>
-                      <v-list-item-content>
-                        {{ desc.desc }}
+                      <v-list-item-content v-html="product.productDesc">
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -416,7 +419,5 @@ export default {
 
 .favorite {
   cursor: pointer;
-}
-.imgB {
 }
 </style>

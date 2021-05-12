@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-if="data.length > 0">
     <v-app-bar v-if="title != 'Deal of the day'" dense flat>
       <v-toolbar-title class="font-weight-bold">{{ title }} </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -7,7 +7,7 @@
       <v-btn class="hidden-sm-and-down" text depressed>Best Seller</v-btn>
       <v-btn text depressed>View All</v-btn>
     </v-app-bar>
-    <v-app-bar v-else dense flat>
+    <v-app-bar v-if="data.length > 0 && title == 'Deal of the day'" dense flat>
       <v-toolbar-title class="font-weight-bold"
         >Deal of the day</v-toolbar-title
       >
@@ -24,11 +24,12 @@
       >
         <v-slide-item class="mr-5 mb-4" v-for="(n, i) in data" :key="i">
           <ProductCard
-            shop="Ashewa Store"
-            title="Lorem, ipsum dolor sit consectetur adipisicing elit. Itaque, iure."
-            :image="n.image"
-            :price="n.price"
-            :rating="5"
+            :vendor="n.vendor"
+            :productName="n.productName"
+            :productImages="n.productImages"
+            :sellingPrice="n.sellingPrice"
+            :productId="n.productId"
+            :productCategory="n.productCategory"
           />
         </v-slide-item>
       </v-slide-group>
@@ -44,11 +45,12 @@
         class="mx-auto"
       >
         <ProductMobile
-          shop="Ashewa Store"
-          title="Lorem, ipsum dolor sit consectetur adipisicing elit. Itaque, iure."
-          :image="n.image"
-          :price="n.price"
-          :rating="5"
+          :vendor="n.vendor"
+          :productName="n.productName"
+          :productImages="n.productImages"
+          :sellingPrice="n.sellingPrice"
+          :productId="n.productId"
+          :productCategory="n.productCategory"
         />
       </v-col>
     </v-row>
@@ -66,6 +68,11 @@ export default {
   props: {
     data: Array,
     title: String,
+  },
+  data() {
+    return {
+      model: null,
+    };
   },
 };
 </script>

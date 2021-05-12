@@ -8,7 +8,6 @@
     <v-bottom-navigation
       fixed
       class="hidden-lg-and-up"
-      :value="value"
       color="#09B750"
       horizontal
     >
@@ -56,9 +55,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Footer",
   computed: {
+    ...mapGetters(["totalWishList", "totalCartList"]),
     appVersion() {
       return this.$store.getters.appVersion;
     },

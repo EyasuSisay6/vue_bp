@@ -101,7 +101,7 @@ export const buildSuccess = (msg, commit) => {
   commit(types.SUCCESS, null);
   setTimeout(() => {
     return msg ? commit(types.SUCCESS, msg) : commit(types.SHOW_SUCCESS, false);
-  }, 0);
+  }, 100);
   commit(types.ERROR, null);
 };
 

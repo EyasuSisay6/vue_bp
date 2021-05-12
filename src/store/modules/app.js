@@ -1,5 +1,5 @@
 import * as types from "@/store/mutation-types";
-import packageJson from "../../../package.json";
+//import packageJson from "../../../package.json";
 
 const getters = {
   appTitle: (state) => state.appTitle,
@@ -20,7 +20,7 @@ const mutations = {
 
 const state = {
   appTitle: "Ashewa E-commerce",
-  appVersion: packageJson.version,
+  appVersion: "0.0.1",
 };
 
 export default {

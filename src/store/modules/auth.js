@@ -28,7 +28,6 @@ const actions = {
         `,
       })
       .then((response) => {
-        console.log(response.data.tokenAuth);
         // commit(types.SHOW_LOADING, false);
         // if (response.status === 200) {
         onLogin(apolloClient, response.data.tokenAuth.token);
@@ -42,17 +41,18 @@ const actions = {
         );
         commit(types.SAVE_USER, response.data.tokenAuth.payload);
         commit(types.SAVE_TOKEN, response.data.tokenAuth.token);
-        buildSuccess(
-          "Successfully logged in",
-          commit,
-          router.push({
-            name: "landing",
-          })
-        );
+        console.log(response.data.tokenAuth);
+        // dispatch("getAllProducts", { page: 1, pageSize: 6 });
+        // dispatch("parentCats");
+        buildSuccess("Successfully logged in", commit);
+        router.push({
+          path: "/",
+        });
 
         // }
       })
       .catch((error) => {
+        console.log(error);
         handleError(error, commit, resp);
       });
   },
@@ -62,6 +62,8 @@ const actions = {
     commit(types.SAVE_USER, user);
     commit(types.SAVE_TOKEN, JSON.parse(localStorage.getItem("token")));
     commit(types.SET_LOCALE, JSON.parse(localStorage.getItem("locale")));
+    // dispatch("getAllProducts", { page: 1, pageSize: 6 });
+    // dispatch("parentCats");
   },
   userLogout({ commit }) {
     onLogout(apolloClient);

@@ -140,7 +140,7 @@
                     @mouseleave="color4 = 'black'"
                   >
                     <router-link
-                      :to="{ route: '/login' }"
+                      :to="{ path: '/login' }"
                       :style="
                         `color:${color4};cursor: pointer; text-decoration:none;`
                       "
@@ -218,7 +218,7 @@
                 <v-col>
                   <router-link
                     style="text-decoration:none;"
-                    :to="{ name: 'home' }"
+                    :to="{ name: 'landing' }"
                   >
                     <div class="dropDownB" dark>
                       Shops
@@ -246,7 +246,7 @@
                 <v-col>
                   <router-link
                     style="text-decoration:none;"
-                    :to="{ name: 'home' }"
+                    :to="{ name: 'landing' }"
                   >
                     <div class="dropDownB" dark>
                       Blogs
@@ -446,7 +446,7 @@ export default {
         return [
           {
             title: this.$t("menuItems.HOME"),
-            link: "home",
+            link: "landing",
             icon: "mdi-home",
             class: "btnHome",
           },
@@ -458,7 +458,7 @@ export default {
           },
           {
             title: this.$t("menuItems.MY_PROFILE"),
-            link: "profile",
+            link: "landing",
             icon: "mdi-face",
             class: "btnProfile",
           },

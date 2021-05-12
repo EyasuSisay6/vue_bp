@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="background-color:white">
     <v-container class="mt-2">
       <v-row class="mt-5">
         <v-spacer></v-spacer>
@@ -14,7 +14,11 @@
             :items-per-page="3"
           >
             <template v-slot:item.image="{ item }">
-              <v-img height="200" width="200" :src="item.image"></v-img>
+              <v-img
+                height="200"
+                width="200"
+                :src="`http://188.166.153.99/media/${item.image}`"
+              ></v-img>
             </template>
             <template v-slot:item.action="{ item }">
               <v-btn @click="removeProduct(item.productId)" small color="error">

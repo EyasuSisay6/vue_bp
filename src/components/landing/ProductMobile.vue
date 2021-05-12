@@ -2,20 +2,20 @@
   <div style="width:150px">
     <v-card width="150">
       <v-img
-        :src="image"
+        :src="`http://188.166.153.99/media/${productImages[0].image}`"
         class="white--text align-end"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         width="150"
         height="150"
       >
         <v-card-title class="text-md-h6 text-subtitle-2"
-          >{{ price }} ETB</v-card-title
+          >{{ sellingPrice }} ETB</v-card-title
         >
       </v-img>
     </v-card>
-    <p class="text-subtitle-2 ma-0 pa-0">{{ shop }}</p>
+    <p class="text-subtitle-2 ma-0 pa-0">{{ productName }}</p>
     <v-rating
-      :value="rating"
+      :value="3"
       readonly
       background-color="green lighten-3"
       color="#09B750"
@@ -24,7 +24,15 @@
     <v-divider></v-divider>
     <v-row class="mt-1 mb-2" justify="center">
       <v-btn
-        @click="addToCart({ image, price, title, id: 1 })"
+        @click="
+          addToCart({
+            image: productImages[0].image,
+            price: sellingPrice,
+            title: productName,
+            id: productId,
+            category: productCategory.categoryName,
+          })
+        "
         icon
         class="hover-icon"
         style=""
@@ -33,7 +41,7 @@
       <v-btn
         @click="
           $router.push({
-            path: `/ProductDetails/${1}`,
+            path: `/ProductDetails/${productId}`,
           })
         "
         icon
@@ -42,7 +50,15 @@
         ><v-icon small>mdi-eye-outline</v-icon></v-btn
       >
       <v-btn
-        @click="addToWish({ image, price, title, id: 1 })"
+        @click="
+          addToWish({
+            image: productImages[0].image,
+            price: sellingPrice,
+            title: productName,
+            id: productId,
+            category: productCategory.categoryName,
+          })
+        "
         icon
         class="hover-icon"
         style=""
@@ -58,24 +74,28 @@
 <script>
 export default {
   props: {
-    shop: {
-      type: String,
+    vendor: {
+      type: Object,
       required: true,
     },
-    price: {
+    sellingPrice: {
       type: Number,
       required: true,
     },
-    rating: {
-      type: Number,
-      required: true,
-    },
-    title: {
+    productId: {
       type: String,
       required: true,
     },
-    image: {
+    productName: {
       type: String,
+      required: true,
+    },
+    productImages: {
+      type: Array,
+      required: true,
+    },
+    productCategory: {
+      type: Object,
       required: true,
     },
     width: {

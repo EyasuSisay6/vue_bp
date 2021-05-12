@@ -24,7 +24,7 @@ const mutations = {
       {
         productId: value.id,
         name: value.title,
-        category: 1,
+        category: value.category,
         price: value.price,
         image: value.image,
       },

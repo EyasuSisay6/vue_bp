@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="mb-3">
+  <v-container style="background-color:white" fluid class="mb-3">
     <v-layout row wrap class="mx-10">
       <Heading :title="$t('signup.TITLE')" />
       <v-flex xs12 sm6 offset-sm3>

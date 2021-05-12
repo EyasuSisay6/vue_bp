@@ -1,10 +1,40 @@
 import * as types from "@/store/mutation-types";
+import { createProvider } from "../../vue-apollo";
+import { handleError } from "@/utils/utils.js";
+import { gql } from "graphql-tag";
+
+let apolloClient = createProvider().defaultClient;
 
 const getters = {
   categories: (state) => state.categories,
   totalCategories: (state) => state.totalCategories,
   getCategoryId: (state) => (id) => {
-    return state.categories.find((category) => category.id == id);
+    return state.categories.find((category) => category.pcatId == id);
+  },
+};
+
+const actions = {
+  async parentCats({ commit }) {
+    const resp = await apolloClient
+      .query({
+        query: gql`
+          {
+            parentCats {
+              pcatId
+              parentCatName
+              catImage
+            }
+          }
+        `,
+      })
+      .then((response) => {
+        console.log(response.data.parentCats);
+        commit(types.SAVE_ALL_CATEGORIES, response.data.parentCats);
+        // commit(types.SAVE_TOKEN, response.data.tokenAuth.token);
+      })
+      .catch((error) => {
+        handleError(error, commit, resp);
+      });
   },
 };
 
@@ -16,51 +46,13 @@ const mutations = {
       title: value.title,
     });
   },
+  [types.SAVE_ALL_CATEGORIES](state, value) {
+    state.categories = value;
+  },
 };
 
 const state = {
-  categories: [
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/1.2ce1d51.jpg",
-      id: 1,
-      title: "Electronics",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/2.c920612.jpg",
-      id: 2,
-      title: "Clothings",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/3.4dd1f5e.jpg",
-      id: 3,
-      title: "Computers",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/4.1c054cc.jpg",
-      id: 4,
-      title: "Home $ Kitchen",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/5.cf89506.jpg",
-      id: 5,
-      title: "Health & Beauty",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/6.c7fe10e.jpg",
-      id: 6,
-      title: "Jewlry & Watch",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/7.8e65d3d.jpg",
-      id: 7,
-      title: "Technology Toys",
-    },
-    {
-      image: "http://vuestorefronts.com/_nuxt/img/8.24a3c9f.jpg",
-      id: 8,
-      title: "Mobile Phones",
-    },
-  ],
+  categories: [],
   totalCategories: 8,
 };
 
@@ -68,4 +60,5 @@ export default {
   state,
   getters,
   mutations,
+  actions,
 };

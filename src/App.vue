@@ -77,6 +77,18 @@ export default {
       return this.$store.getters.appTitle;
     },
   },
+  created() {
+    this.parentCats();
+    this.getAllProducts();
+  },
+  methods: {
+    async getAllProducts() {
+      await this.$store.dispatch("getAllProducts", { page: 1, pageSize: 5 });
+    },
+    async parentCats() {
+      this.$store.dispatch("parentCats");
+    },
+  },
 };
 </script>
 
