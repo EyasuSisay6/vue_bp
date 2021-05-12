@@ -1,43 +1,41 @@
 <template>
-  <v-app style="background-color:white">
-    <div>
-      <FirstAd />
-      <ProductSlide title="Deal of the day" :data="products" />
-      <SecondAd />
-      <section id="top-categories-of-the-month">
-        <v-app-bar dense flat>
-          <v-toolbar-title class="font-weight-bold"
-            >Top Categories of The Month
-          </v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn text depressed>View All</v-btn>
-        </v-app-bar>
-        <div class="mx-4 my-5">
-          <v-row>
-            <v-col
-              cols="6"
-              lg="3"
-              md="4"
-              sm="6"
-              class="mx-auto"
-              v-for="(n, i) in categories"
-              :key="i"
-            >
-              <CategoryCard
-                :title="n.parentCatName"
-                :image="`http://188.166.153.99/media/${n.catImage}`"
-                :id="n.pcatId"
-              />
-            </v-col>
-          </v-row>
-        </div>
-      </section>
-      <ProductSlide title="Consumer Electronics" :data="electronics" />
-      <ProductSlide title="Clothings" :data="clothings" />
-      <ProductSlide title="Home, Garden & Kitchen" :data="home" />
-      <ThirdAd />
-    </div>
-  </v-app>
+  <div>
+    <FirstAd />
+    <ProductSlide title="Deal of the day" :data="products" />
+    <SecondAd />
+    <section id="top-categories-of-the-month">
+      <v-app-bar dense flat>
+        <v-toolbar-title class="font-weight-bold"
+          >Top Categories of The Month
+        </v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn text depressed>View All</v-btn>
+      </v-app-bar>
+      <div class="mx-4 my-5">
+        <v-row>
+          <v-col
+            cols="6"
+            lg="3"
+            md="4"
+            sm="6"
+            class="mx-auto"
+            v-for="(n, i) in categories"
+            :key="i"
+          >
+            <CategoryCard
+              :title="n.parentCatName"
+              :image="`http://188.166.153.99/media/${n.catImage}`"
+              :id="n.pcatId"
+            />
+          </v-col>
+        </v-row>
+      </div>
+    </section>
+    <ProductSlide title="Consumer Electronics" :data="electronics" />
+    <ProductSlide title="Clothings" :data="clothings" />
+    <ProductSlide title="Home, Garden & Kitchen" :data="home" />
+    <ThirdAd />
+  </div>
 </template>
 
 <script>

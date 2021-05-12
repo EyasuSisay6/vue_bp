@@ -1,9 +1,5 @@
 <template>
-  <v-app>
-    <v-main>
-      <WishList />
-    </v-main>
-  </v-app>
+  <WishList />
 </template>
 
 <script>

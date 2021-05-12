@@ -1,9 +1,5 @@
 <template>
-  <v-app>
-    <v-main>
-      <ShoppingCart />
-    </v-main>
-  </v-app>
+  <ShoppingCart />
 </template>
 
 <script>

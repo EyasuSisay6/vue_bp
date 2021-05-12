@@ -1,76 +1,74 @@
 <template>
-  <v-app style="background-color:white">
-    <v-container class="mt-2">
-      <v-row class="mt-5" justify="center">
-        <v-col cols="12" md="8">
-          <v-row justify="end">
-            <v-col><h1 class="mx-auto text-h4 mb-4">Shopping Cart</h1></v-col>
+  <v-container class="mt-2">
+    <v-row class="mt-5" justify="center">
+      <v-col cols="12" md="8">
+        <v-row justify="end">
+          <v-col><h1 class="mx-auto text-h4 mb-4">Shopping Cart</h1></v-col>
+        </v-row>
+
+        <v-data-table
+          :headers="headers"
+          :items="totalCartList"
+          :items-per-page="3"
+        >
+          <template v-slot:[`item.image`]="{ item }">
+            <v-img
+              height="200"
+              width="200"
+              :src="`http://188.166.153.99/media/${item.image}`"
+            ></v-img>
+          </template>
+          <template v-slot:[`item.action`]="{ item }">
+            <v-btn @click="removeProduct(item.productId)" small color="error">
+              <v-icon left dark>
+                mdi-trash-can-outline
+              </v-icon>
+              {{ item.action }}Remove
+            </v-btn>
+          </template>
+        </v-data-table></v-col
+      >
+
+      <v-col cols="12" md="4">
+        <v-col cols="12" sm="12" md="12" lg="12">
+          <v-row justify="center" class="my-2">
+            <v-col cols="10" class="grey lighten-2">
+              <v-row justify="space-between" class="ma-4">
+                <span>Total items</span>
+                <span>{{ totalCartList.length }}</span>
+              </v-row>
+              <v-divider></v-divider>
+              <v-row justify="space-between" class="ma-4">
+                <span>tax</span>
+                <span>{{ total * 0.15 }}</span>
+              </v-row>
+              <v-divider></v-divider>
+              <v-divider></v-divider>
+              <v-row justify="space-between" class="ma-4">
+                <h3>Total</h3>
+                <h3 class="red--text">{{ total + total * 0.15 }} ETB</h3>
+              </v-row>
+            </v-col>
           </v-row>
 
-          <v-data-table
-            :headers="headers"
-            :items="totalCartList"
-            :items-per-page="3"
-          >
-            <template v-slot:item.image="{ item }">
-              <v-img
-                height="200"
-                width="200"
-                :src="`http://188.166.153.99/media/${item.image}`"
-              ></v-img>
-            </template>
-            <template v-slot:item.action="{ item }">
-              <v-btn @click="removeProduct(item.productId)" small color="error">
-                <v-icon left dark>
-                  mdi-trash-can-outline
-                </v-icon>
-                {{ item.action }}Remove
+          <v-row class="mb-14" justify="center">
+            <v-col cols="10" class="px-0">
+              <v-btn
+                width="100%"
+                height="50"
+                class="btn"
+                depressed
+                color="primary"
+                @click="clear"
+              >
+                Proceed to checkout
               </v-btn>
-            </template>
-          </v-data-table></v-col
-        >
-
-        <v-col cols="12" md="4">
-          <v-col cols="12" sm="12" md="12" lg="12">
-            <v-row justify="center" class="my-2">
-              <v-col cols="10" class="grey lighten-2">
-                <v-row justify="space-between" class="ma-4">
-                  <span>Total items</span>
-                  <span>{{ totalCartList.length }}</span>
-                </v-row>
-                <v-divider></v-divider>
-                <v-row justify="space-between" class="ma-4">
-                  <span>tax</span>
-                  <span>{{ total * 0.15 }}</span>
-                </v-row>
-                <v-divider></v-divider>
-                <v-divider></v-divider>
-                <v-row justify="space-between" class="ma-4">
-                  <h3>Total</h3>
-                  <h3 class="red--text">{{ total + total * 0.15 }} ETB</h3>
-                </v-row>
-              </v-col>
-            </v-row>
-
-            <v-row class="mb-14" justify="center">
-              <v-col cols="10" class="px-0">
-                <v-btn
-                  width="100%"
-                  height="50"
-                  class="btn"
-                  depressed
-                  color="primary"
-                  @click="clear"
-                >
-                  Proceed to checkout
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-col>
+            </v-col>
+          </v-row>
         </v-col>
-      </v-row>
-    </v-container>
-  </v-app>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

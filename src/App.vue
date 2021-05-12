@@ -1,19 +1,18 @@
 <template>
   <v-app>
     <Toolbar />
-    <v-main class="text-center">
+    <v-main
+      :style="
+        $vuetify.theme.dark
+          ? 'background-color:black'
+          : 'background-color:white'
+      "
+      class="text-center"
+    >
       <loading />
-      <v-container
-        :class="$vuetify.theme.dark ? 'darkB' : 'lightB'"
-        class="pa-0"
-        fluid
-      >
-        <transition
-          :class="$vuetify.theme.dark ? 'darkB' : 'lightB'"
-          name="fade"
-          mode="out-in"
-        >
-          <router-view :class="$vuetify.theme.dark ? 'darkB' : 'lightB'" />
+      <v-container class="pa-0" fluid>
+        <transition name="fade" mode="out-in">
+          <router-view />
         </transition>
       </v-container>
     </v-main>
@@ -42,28 +41,10 @@ export default {
           content: this.appTitle,
         },
         { name: "application-name", content: this.appTitle },
-      ],
-      link: [
         {
-          rel: "apple-touch-icon",
-          sizes: "180x180",
-          href: "/apple-touch-icon.png",
+          httpEquiv: "Content-Security-Policy",
+          content: "upgrade-insecure-requests",
         },
-        {
-          rel: "icon",
-          type: "image/png",
-          sizes: "32x32",
-          href: "/favicon-32x32.png",
-        },
-        {
-          rel: "icon",
-          type: "image/png",
-          sizes: "16x16",
-          href: "/favicon-16x16.png",
-        },
-        { rel: "manifest", href: "/site.webmanifest" },
-        { rel: "mask-icon", color: "#5bbad5", href: "/safari-pinned-tab.svg" },
-        { rel: "favicon", href: "/favicon.ico" },
       ],
     };
   },
