@@ -2,9 +2,11 @@
   <v-container class="mt-2">
     <v-row class="mt-5">
       <v-spacer></v-spacer>
-      <v-col cols="12" md="8">
+      <v-col cols="12" :md="col">
         <v-row justify="end">
-          <v-col><h1 class="mx-auto text-h4 mb-4">Wish List</h1></v-col>
+          <v-col
+            ><h1 class="mx-auto text-h4 mb-4">{{ title }}</h1></v-col
+          >
         </v-row>
 
         <v-data-table
@@ -35,6 +37,16 @@
 </template>
 <script>
 export default {
+  props: {
+    col: {
+      default: "8",
+      type: String,
+    },
+    title: {
+      default: "Wish List",
+      type: String,
+    },
+  },
   computed: {
     totalWishList() {
       return this.$store.getters.totalWishList;

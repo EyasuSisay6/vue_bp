@@ -25,11 +25,18 @@
         <v-slide-item class="mr-5 mb-4" v-for="(n, i) in data" :key="i">
           <ProductCard
             :vendor="n.vendor"
-            :productName="n.productName"
-            :productImages="n.productImages"
+            :productName="n.name"
+            :productImages="[
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/1.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/2.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/3.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/4.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/5.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/6.jpeg',
+            ]"
             :sellingPrice="n.sellingPrice"
-            :productId="n.productId"
-            :productCategory="n.productCategory"
+            :productId="n.id"
+            :productCategory="n.category"
           />
         </v-slide-item>
       </v-slide-group>
@@ -46,11 +53,18 @@
       >
         <ProductMobile
           :vendor="n.vendor"
-          :productName="n.productName"
-          :productImages="n.productImages"
+          :productName="n.name"
+          :productImages="[
+            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/1.jpeg',
+            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/2.jpeg',
+            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/3.jpeg',
+            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/4.jpeg',
+            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/5.jpeg',
+            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/6.jpeg',
+          ]"
           :sellingPrice="n.sellingPrice"
-          :productId="n.productId"
-          :productCategory="n.productCategory"
+          :productId="n.id"
+          :productCategory="n.category"
         />
       </v-col>
     </v-row>

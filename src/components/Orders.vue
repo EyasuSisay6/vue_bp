@@ -2,7 +2,9 @@
   <v-row class="mt-5" justify="center">
     <v-col cols="10">
       <v-row justify="end">
-        <v-col><h1 class="mx-auto text-h4 mb-4">Orders List</h1></v-col>
+        <v-col
+          ><h1 class="mx-auto text-h4 mb-4">{{ title }}</h1></v-col
+        >
         <v-col cols="12" lg="5" md="12">
           <v-card-title>
             <v-text-field
@@ -17,7 +19,7 @@
       </v-row>
 
       <v-data-table :headers="headers" :items="desserts" :items-per-page="5">
-        <template v-slot:item.status="{ item }">
+        <template v-slot:[`item.status`]="{ item }">
           <v-chip label :color="getColor(item.status)" dark>
             {{ item.status }}
           </v-chip>
@@ -28,6 +30,12 @@
 </template>
 <script>
 export default {
+  props: {
+    title: {
+      type: String,
+      default: "Orders List",
+    },
+  },
   data() {
     return {
       headers: [

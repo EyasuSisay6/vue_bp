@@ -1,190 +1,122 @@
 <template>
-  <v-app>
+  <div>
     <v-container>
-      <v-row justify="start" class="my-4">
-        <v-col cols="">
-          <h3>Overview</h3>
+      <!-- :src="`http://188.166.153.99/media/${image.image}`" -->
+      <!-- v-html="product.description" -->
+      <v-row>
+        <v-col cols="12" md="5" class="my-4">
+          <ProductZoomer
+            :base-images="Pimages"
+            :base-zoomer-options="zoomerOptions"
+          />
         </v-col>
-      </v-row>
-      <v-row class="text-center">
-        <v-container class="" fluid>
-          <v-row justify="center">
-            <v-col cols="11" md="6" sm="10" align-self="start">
-              <v-row justify="center">
-                <v-carousel
-                  class="hidden-sm-and-down"
-                  hide-delimiters
-                  height="400"
-                  show-arrows-on-hover
-                >
-                  <v-carousel-item
-                    v-for="image in product.productImages"
-                    :key="image.image"
-                    :src="`http://188.166.153.99/media/${image.image}`"
-                    reverse-transition="fade-transition"
-                    transition="fade-transition"
-                  ></v-carousel-item>
-                </v-carousel>
-                <v-carousel
-                  class="hidden-md-and-up"
-                  hide-delimiters
-                  height="250"
-                  show-arrows-on-hover
-                >
-                  <v-carousel-item
-                    v-for="image in product.productImages"
-                    :key="image.image"
-                    :src="`http://188.166.153.99/media/${image.image}`"
-                    reverse-transition="fade-transition"
-                    transition="fade-transition"
-                  ></v-carousel-item>
-                </v-carousel>
-              </v-row>
-              <v-row justify="center">
-                <v-col
-                  class="imgB"
-                  cols="2"
-                  v-for="image in product.productImages"
-                  :key="image.image"
-                >
-                  <v-img
-                    width="40px"
-                    height="40px"
-                    :src="`http://188.166.153.99/media/${image.image}`"
-                  ></v-img>
+        <v-col>
+          <v-col>
+            <v-container>
+              <v-row justify="start">
+                <v-col cols="">
+                  <h3>Overview</h3>
                 </v-col>
               </v-row>
-            </v-col>
+              <v-row justify="start" class="ml-4 text-left">
+                <div class="headline">
+                  <!-- {{ product.name }} -->
+                  Apple MacBook Pro 13 | MacOS Big Sur 2020 | 16GB RAM | 1TB SSD
+                  | WARRANTY |
+                </div>
+              </v-row>
+              <v-row justify="start" class="ma-4">
+                <span> Brand: {{ product.vendor.storeName }}</span>
 
-            <v-col cols="12" md="6" sm="10" class="">
-              <v-container>
-                <v-row justify="start" class="ml-4 text-left">
-                  <div class="headline">
-                    {{ product.productName }}
-                  </div>
-                </v-row>
-                <v-row justify="start" class="ma-4">
-                  <span> Brand: </span>
-                  <span class="green--text ml-2 mr-2">
-                    {{ product.vendor.storName }}
-                  </span>
-                  |
-                  <v-rating
-                    v-model="rating"
-                    color="yellow darken-3"
-                    background-color="grey darken-1"
-                    dense
-                    half-increments
-                    hover
-                    size="18"
-                  ></v-rating>
-                  <span class="caption ml-2 mt-1">({{ 3 }} review)</span>
-                </v-row>
-                <v-divider></v-divider>
-                <v-row justify="start" class="ma-4">
-                  <span class="mt-1 text-decoration-line-through">
-                    {{ product.dealerPrice }}
-                  </span>
-                  <h3 class="ml-2 green--text">
-                    {{ product.sellingPrice }}
-                  </h3>
-                </v-row>
-                <v-row justify="start" class="ma-4">
-                  <span class="mr-2">Sold By:</span>
-                  <span class="text-uppercase green--text">
-                    {{ product.vendor.storeName }}
-                  </span>
-                </v-row>
-                <v-row class="text-left">
-                  <v-list>
-                    <v-list-item v-for="desc in 1" :key="desc">
-                      <v-list-item-icon>
-                        <v-icon> mdi-circle-small </v-icon>
-                      </v-list-item-icon>
-                      <v-list-item-content v-html="product.productDesc">
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-row>
-                <v-divider></v-divider>
-                <v-row class="my-4">
-                  <v-col cols="12" sm="12" md="12" lg="3" class="">
-                    <v-card elevation="0" :width="width + '%'">
-                      <div class="imgB">
-                        <span class="">Quantity</span>
-                      </div>
-                      <v-row>
-                        <v-col cols="4">
-                          <v-btn icon depressed @click="decrement">
-                            <v-icon> mdi-minus </v-icon>
-                          </v-btn>
-                        </v-col>
-                        <v-col cols="4" align-self="center">
-                          <span>{{ quantity }}</span>
-                        </v-col>
-                        <v-col cols="4">
-                          <v-btn icon depressed @click="increment">
-                            <v-icon> mdi-plus </v-icon>
-                          </v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-card>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="12"
-                    md="6"
-                    lg="3"
-                    :class="'mt-' + marginTop"
+                <v-rating
+                  v-model="rating"
+                  color="yellow darken-3"
+                  background-color="grey darken-1"
+                  dense
+                  readonly
+                  half-increments
+                  hover
+                  size="18"
+                ></v-rating>
+                <span class="caption ml-2 mt-1">({{ 3 }} review)</span>
+              </v-row>
+              <v-divider></v-divider>
+              <v-row class="mt-3 ml-2">
+                <p class="text-caption">
+                  Condition: Used “LAPTOP IS FULLY TESTED AND 100% FUNCTIONAL,
+                  CLEANED, AND READY TO USE!”
+                </p>
+              </v-row>
+              <v-row class="mt-3 ml-2">
+                <p class="text-caption text-start">
+                  Customization: Customized logo(Min. Order: 1000 Pieces)
+                  Customized packaging(Min. Order: 1000 Pieces) Graphic
+                  customization(Min. Order: 1000 Pieces)
+                </p>
+              </v-row>
+              <v-row>
+                <v-col cols="6" md="2">Unit Price:</v-col>
+                <v-col cols="6" md="3">
+                  <v-row
+                    ><h2 class="text-weight-bolder">
+                      ETB {{ product.sellingPrice }}
+                    </h2>
+                  </v-row>
+                  <v-row>
+                    <h5 class="text-decoration-line-through text-weight-normal">
+                      ETB {{ product.dealerPrice }}
+                    </h5>
+                  </v-row>
+                </v-col>
+                <v-col cols="12" sm="12" md="3" lg="3" class="">
+                  <v-card elevation="0" :width="width + '%'">
+                    <div class="imgB">
+                      <span class="">Quantity</span>
+                    </div>
+                    <v-row>
+                      <v-col cols="4">
+                        <v-btn icon depressed @click="decrement">
+                          <v-icon> mdi-minus </v-icon>
+                        </v-btn>
+                      </v-col>
+                      <v-col cols="4" align-self="center">
+                        <span>{{ quantity }}</span>
+                      </v-col>
+                      <v-col cols="4">
+                        <v-btn icon depressed @click="increment">
+                          <v-icon> mdi-plus </v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-col>
+                <v-col
+                  ><v-btn dark class="btn mt-2 mr-2" tile color="#09b750"
+                    >Buy it Now</v-btn
                   >
-                    <v-btn
-                      depressed
-                      color="#09b750"
-                      dark
-                      height="40"
-                      class="btn"
-                      :width="width + '%'"
-                    >
-                      Add to cart
-                    </v-btn>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="12"
-                    md="6"
-                    lg="3"
-                    class="text-right"
-                    :class="'mt-' + marginTop"
-                  >
-                    <v-btn
-                      depressed
-                      color="#09b750"
-                      dark
-                      height="40"
-                      class="btn"
-                      :width="width + '%'"
-                    >
-                      Buy Now
-                    </v-btn>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="12"
-                    md="12"
-                    lg="3"
-                    class="text-center"
-                    :class="'mt-' + marginTop"
-                  >
-                  </v-col>
-                </v-row>
-                <v-divider></v-divider>
-              </v-container>
-            </v-col>
-          </v-row>
-        </v-container>
+                  <v-btn class="btn mt-2 mr-2" tile dark color="#09b750"
+                    >Add to Cart</v-btn
+                  ></v-col
+                >
+              </v-row>
+              <v-divider class="my-6"></v-divider>
+              <v-row>
+                <v-btn dark color="#09b750" class="btn mr-3">Make Offer</v-btn>
+
+                <v-btn
+                  elevation="0"
+                  color="btn"
+                  style="background-color:white;color:#09b750;border:1px solid #09b750;"
+                  >Add to Wishlist
+                </v-btn>
+                <v-spacer></v-spacer>
+              </v-row>
+            </v-container>
+          </v-col>
+        </v-col>
       </v-row>
     </v-container>
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -237,6 +169,112 @@ export default {
           days: "Negotiable",
         },
       ],
+
+      productImages: [
+        "/images/1N.jpg",
+        "/images/2N.jpg",
+        "/images/3N.jpg",
+        "/images/4N.jpg",
+        "/images/5N.jpg",
+        "/images/6N.jpg",
+      ],
+
+      zoomerOptions: {
+        zoomFactor: 4,
+        pane: "container",
+        hoverDelay: 300,
+        namespace: "inline-container",
+        move_by_click: false,
+        scroll_items: 7,
+        choosed_thumb_border_color: "#dd2c00",
+        scroller_position: "bottom",
+      },
+      Pimages: {
+        // optional, if not present will use normal_size instead
+        thumbs: [
+          {
+            id: "1",
+            url: "/images/1N.jpg",
+          },
+          {
+            id: "2",
+            url: "/images/2N.jpg",
+          },
+          {
+            id: "3",
+            url: "/images/3N.jpg",
+          },
+          {
+            id: "4",
+            url: "/images/4N.jpg",
+          },
+          {
+            id: "5",
+            url: "/images/5N.jpg",
+          },
+          {
+            id: "6",
+            url: "/images/6N.jpg",
+          },
+        ],
+
+        // required
+        normal_size: [
+          {
+            id: "1",
+            url: "/images/1N.jpg",
+          },
+          {
+            id: "2",
+            url: "/images/2N.jpg",
+          },
+          {
+            id: "3",
+            url: "/images/3N.jpg",
+          },
+          {
+            id: "4",
+            url: "/images/4N.jpg",
+          },
+          {
+            id: "5",
+            url: "/images/5N.jpg",
+          },
+          {
+            id: "6",
+            url: "/images/6N.jpg",
+          },
+        ],
+
+        //optional, if not present will use normal_size instead
+        large_size: [
+          {
+            id: "1",
+            url: "/images/1.jpg",
+          },
+          {
+            id: "2",
+            url: "/images/2.jpg",
+          },
+          {
+            id: "3",
+            url: "/images/3.jpg",
+          },
+          {
+            id: "4",
+            url: "/images/4.jpg",
+          },
+          {
+            id: "5",
+            url: "/images/5.jpg",
+          },
+          {
+            id: "6",
+            url: "/images/6N.jpg",
+          },
+        ],
+      },
+
       recommended: [
         {
           src:

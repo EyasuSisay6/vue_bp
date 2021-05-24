@@ -1,8 +1,9 @@
 <template>
   <div style="width:150px">
+    <!-- :src="`http://188.166.153.99/media/${productImages[0].image}`" -->
     <v-card width="150">
       <v-img
-        :src="`http://188.166.153.99/media/${productImages[0].image}`"
+        :src="productImages[0]"
         class="white--text align-end"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         width="150"

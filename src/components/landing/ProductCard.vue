@@ -4,11 +4,7 @@
       :color="$vuetify.theme.dark ? '#121212' : ''"
       elevation="0"
       :width="width"
-      ><v-img
-        :src="`http://188.166.153.99/media/${productImages[0].image}`"
-        :height="height"
-      >
-      </v-img>
+      ><v-img :src="productImages[0]" :height="height"> </v-img>
       <p class="overline ma-0 pa-0">{{ vendor.vendorName }}</p>
       <v-divider class="mb-2 pa-0"></v-divider>
       <p class="h4 font-weight-bold ma-0" style="color:#09B750;">
@@ -42,7 +38,7 @@
               price: sellingPrice,
               title: productName,
               id: productId,
-              category: productCategory.categoryName,
+              category: productCategory.name,
             })
           "
           icon
@@ -68,7 +64,7 @@
               price: sellingPrice,
               title: productName,
               id: productId,
-              category: productCategory.categoryName,
+              category: productCategory.name,
             })
           "
           icon

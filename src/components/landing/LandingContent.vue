@@ -1,7 +1,7 @@
 <template>
   <div>
     <FirstAd />
-    <ProductSlide title="Deal of the day" :data="products" />
+    <ProductSlide title="Deal of the day" :data="sampleProducts" />
     <SecondAd />
     <section id="top-categories-of-the-month">
       <v-app-bar dense flat>
@@ -19,14 +19,10 @@
             md="4"
             sm="6"
             class="mx-auto"
-            v-for="(n, i) in categories"
+            v-for="(n, i) in sampleCategories"
             :key="i"
           >
-            <CategoryCard
-              :title="n.parentCatName"
-              :image="`http://188.166.153.99/media/${n.catImage}`"
-              :id="n.pcatId"
-            />
+            <CategoryCard :title="n.name" :image="n.image" :id="n.id" />
           </v-col>
         </v-row>
       </div>
@@ -74,6 +70,12 @@ export default {
     },
     home() {
       return this.$store.getters.home;
+    },
+    sampleCategories() {
+      return this.$store.getters.sampleCategories;
+    },
+    sampleProducts() {
+      return this.$store.getters.sampleProducts;
     },
   },
   data() {

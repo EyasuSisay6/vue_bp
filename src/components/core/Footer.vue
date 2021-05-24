@@ -12,6 +12,7 @@
       horizontal
     >
       <v-spacer></v-spacer>
+      <v-spacer></v-spacer>
       <v-btn
         @click="
           $router.push({
@@ -21,7 +22,6 @@
       >
         <v-icon color="#09B750">mdi-home</v-icon>
       </v-btn>
-      <v-spacer></v-spacer>
 
       <v-btn
         @click="
@@ -36,7 +36,6 @@
         </v-badge>
       </v-btn>
 
-      <v-spacer></v-spacer>
       <v-btn
         @click="
           $router.push({
@@ -49,7 +48,13 @@
           <v-icon color="#09B750">mdi-cart</v-icon>
         </v-badge>
       </v-btn>
-      <v-spacer></v-spacer>
+      <v-btn tile>
+        <p class="mt-4">Ask more</p>
+      </v-btn>
+
+      <v-btn tile color="#09B750">
+        <p class="mt-4 white--text">Buy now</p>
+      </v-btn>
     </v-bottom-navigation>
   </v-footer>
 </template>

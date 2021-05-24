@@ -1,9 +1,9 @@
 <template>
-  <v-app id="inspire">
-    <v-main>
+  <div id="inspire">
+    <div>
       <Overview id="overview" :product="product" ref="overview" />
-    </v-main>
-  </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
