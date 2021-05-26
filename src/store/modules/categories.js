@@ -10,7 +10,7 @@ const getters = {
   totalCategories: (state) => state.totalCategories,
   sampleCategories: (state) => state.sampleCategories,
   getCategoryId: (state) => (id) => {
-    return state.categories.find((category) => category.pcatId == id);
+    return state.sampleCategories.find((category) => category.id == id);
   },
 };
 

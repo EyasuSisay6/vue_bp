@@ -26,22 +26,24 @@
           <ProductCard
             :vendor="n.vendor"
             :productName="n.name"
-            :productImages="[
-              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/1.jpeg',
-              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/2.jpeg',
-              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/3.jpeg',
-              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/4.jpeg',
-              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/5.jpeg',
-              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/6.jpeg',
-            ]"
+            :productImages="{
+              image: [
+                'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/1.jpeg',
+                'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/2.jpeg',
+                'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/3.jpeg',
+                'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/4.jpeg',
+                'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/5.jpeg',
+                'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/6.jpeg',
+              ],
+            }"
             :sellingPrice="n.sellingPrice"
-            :productId="n.id"
+            :productId="`${n.id}`"
             :productCategory="n.category"
           />
         </v-slide-item>
       </v-slide-group>
     </v-row>
-    <v-row class="hidden-md-and-up">
+    <v-row class="mx-4 hidden-md-and-up">
       <v-col
         v-for="(n, i) in data"
         :key="i"
@@ -54,16 +56,18 @@
         <ProductMobile
           :vendor="n.vendor"
           :productName="n.name"
-          :productImages="[
-            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/1.jpeg',
-            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/2.jpeg',
-            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/3.jpeg',
-            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/4.jpeg',
-            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/5.jpeg',
-            'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/6.jpeg',
-          ]"
+          :productImages="{
+            image: [
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/1.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/2.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/3.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/4.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/5.jpeg',
+              'https://www.yoohooworld.com/assets/images/vue_product_zoomer/normal_size/6.jpeg',
+            ],
+          }"
           :sellingPrice="n.sellingPrice"
-          :productId="n.id"
+          :productId="`${n.id}`"
           :productCategory="n.category"
         />
       </v-col>

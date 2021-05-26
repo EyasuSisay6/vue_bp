@@ -121,13 +121,14 @@ const state = {
   sampleProducts: [
     {
       id: 1,
-      productName: "Test",
+      name: "Test",
       sellingPrice: 5000,
       dealerPrice: 6000,
       vendor: {
         storeName: "Test Store",
       },
-      productImages: {
+      category: { name: "Electronics" },
+      productimageSet: {
         image: [
           "https://cdn.alzashop.com/Foto/LegendFoto/photos/NL244a1b_2.jpg",
         ],
@@ -135,13 +136,14 @@ const state = {
     },
     {
       id: 2,
-      productName: "Test 2",
+      name: "Test 2",
       sellingPrice: 5000,
       dealerPrice: 6000,
       vendor: {
         storeName: "Test Store",
       },
-      productImages: {
+      category: { name: "Electronics" },
+      productimageSet: {
         image: [
           "https://cdn.alzashop.com/Foto/LegendFoto/photos/NL244a1b_2.jpg",
         ],
@@ -149,13 +151,29 @@ const state = {
     },
     {
       id: 3,
-      productName: "Test 3",
+      name: "Test 3",
       sellingPrice: 5000,
       dealerPrice: 6000,
       vendor: {
         storeName: "Test Store",
       },
-      productImages: {
+      category: { name: "Electronics" },
+      productimageSet: {
+        image: [
+          "https://cdn.alzashop.com/Foto/LegendFoto/photos/NL244a1b_2.jpg",
+        ],
+      },
+    },
+    {
+      id: 4,
+      name: "Test 4",
+      sellingPrice: 5000,
+      dealerPrice: 6000,
+      vendor: {
+        storeName: "Test Store",
+      },
+      category: { name: "Electronics" },
+      productimageSet: {
         image: [
           "https://cdn.alzashop.com/Foto/LegendFoto/photos/NL244a1b_2.jpg",
         ],

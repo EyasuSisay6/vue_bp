@@ -3,7 +3,7 @@
     <!-- :src="`http://188.166.153.99/media/${productImages[0].image}`" -->
     <v-card width="150">
       <v-img
-        :src="productImages[0]"
+        :src="productImages.image[0]"
         class="white--text align-end"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
         width="150"
@@ -27,7 +27,7 @@
       <v-btn
         @click="
           addToCart({
-            image: productImages[0].image,
+            image: productImages.image[0],
             price: sellingPrice,
             title: productName,
             id: productId,
@@ -53,7 +53,7 @@
       <v-btn
         @click="
           addToWish({
-            image: productImages[0].image,
+            image: productImages.image[0],
             price: sellingPrice,
             title: productName,
             id: productId,
@@ -92,7 +92,7 @@ export default {
       required: true,
     },
     productImages: {
-      type: Array,
+      type: Object,
       required: true,
     },
     productCategory: {

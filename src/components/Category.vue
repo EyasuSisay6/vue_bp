@@ -14,11 +14,15 @@
             <div
               class="my-1"
               style="cursor: pointer;"
-              v-for="item in categories"
-              :key="item.pcatId"
-              :src="item.src"
+              v-for="item in sampleCategories"
+              :key="item.id"
+              @click="
+                $router.push({
+                  path: `/category/${item.id}`,
+                })
+              "
             >
-              {{ item.parentCatName }}
+              {{ item.name }}
             </div>
           </div>
         </v-row>
@@ -54,15 +58,16 @@
             >
               <v-slide-item
                 class="mr-5 mb-4"
-                v-for="(n, i) in filteredProducts"
+                v-for="(n, i) in sampleProducts"
                 :key="i"
               >
                 <ProductCard
                   :vendor="n.vendor"
-                  :productName="n.productName"
-                  :productImages="n.productImages"
+                  :productName="n.name"
+                  :productImages="n.productimageSet"
                   :sellingPrice="n.sellingPrice"
-                  :productId="n.productId"
+                  :productId="`${n.id}`"
+                  :productCategory="n.category"
                   :width="150"
                   :height="150"
                 />
@@ -84,15 +89,16 @@
             >
               <v-slide-item
                 class="mr-5 mb-4"
-                v-for="(n, i) in filteredProducts"
+                v-for="(n, i) in sampleProducts"
                 :key="i"
               >
                 <ProductCard
                   :vendor="n.vendor"
-                  :productName="n.productName"
-                  :productImages="n.productImages"
+                  :productName="n.name"
+                  :productImages="n.productimageSet"
                   :sellingPrice="n.sellingPrice"
-                  :productId="n.productId"
+                  :productId="`${n.id}`"
+                  :productCategory="n.category"
                   :width="150"
                   :height="150"
                 />
@@ -139,10 +145,11 @@
               <v-col md="3" v-for="(n, index) in all" :key="index">
                 <ProductCard
                   :vendor="n.vendor"
-                  :productName="n.productName"
-                  :productImages="n.productImages"
+                  :productName="n.name"
+                  :productImages="n.productimageSet"
                   :sellingPrice="n.sellingPrice"
-                  :productId="n.productId"
+                  :productId="`${n.id}`"
+                  :productCategory="n.category"
                   :width="150"
                   :height="150"
                 />
@@ -190,7 +197,13 @@ export default {
       return this.$store.getters.products;
     },
     all() {
-      return this.$store.getters.products;
+      return this.$store.getters.sampleProducts;
+    },
+    sampleProducts() {
+      return this.$store.getters.sampleProducts;
+    },
+    sampleCategories() {
+      return this.$store.getters.sampleCategories;
     },
   },
 

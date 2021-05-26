@@ -4,7 +4,7 @@
       :color="$vuetify.theme.dark ? '#121212' : ''"
       elevation="0"
       :width="width"
-      ><v-img :src="productImages[0]" :height="height"> </v-img>
+      ><v-img :src="productImages.image[0]" :height="height"> </v-img>
       <p class="overline ma-0 pa-0">{{ vendor.vendorName }}</p>
       <v-divider class="mb-2 pa-0"></v-divider>
       <p class="h4 font-weight-bold ma-0" style="color:#09B750;">
@@ -34,10 +34,10 @@
         <v-btn
           @click="
             addToCart({
-              image: productImages[0].image,
+              image: productImages.image[0],
               price: sellingPrice,
               title: productName,
-              id: productId,
+              id: `${productId}`,
               category: productCategory.name,
             })
           "
@@ -60,10 +60,10 @@
         <v-btn
           @click="
             addToWish({
-              image: productImages[0].image,
+              image: productImages.image[0],
               price: sellingPrice,
               title: productName,
-              id: productId,
+              id: `${productId}`,
               category: productCategory.name,
             })
           "
@@ -100,7 +100,7 @@ export default {
       required: true,
     },
     productImages: {
-      type: Array,
+      type: Object,
       required: true,
     },
     productCategory: {

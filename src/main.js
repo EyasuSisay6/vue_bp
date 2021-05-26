@@ -11,11 +11,11 @@ import { store } from "@/store";
 import VuetifyConfirm from "vuetify-confirm";
 import * as VueGoogleMaps from "vue2-google-maps";
 import { createProvider } from "./vue-apollo";
-import ProductZoomer from "vue-product-zoomer";
+import ZoomOnHover from "vue-zoom-on-hover";
 
+Vue.use(ZoomOnHover);
 Vue.config.productionTip = false;
 Vue.use(VuetifyConfirm, { vuetify });
-Vue.use(ProductZoomer);
 Vue.use(VueGoogleMaps, {
   load: {
     key: "",

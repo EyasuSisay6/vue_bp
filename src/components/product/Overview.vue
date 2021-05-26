@@ -4,18 +4,31 @@
       <!-- :src="`http://188.166.153.99/media/${image.image}`" -->
       <!-- v-html="product.description" -->
       <v-row>
-        <v-col cols="12" md="5" class="my-4">
-          <ProductZoomer
-            :base-images="Pimages"
-            :base-zoomer-options="zoomerOptions"
-          />
+        <v-col cols="5" md="5" class="my-4">
+          <zoom-on-hover
+            :img-normal="active.url_normal"
+            :img-zoom="active.url_zoom"
+            :scale="1.3"
+          ></zoom-on-hover>
+
+          <v-slide-group multiple show-arrows>
+            <v-slide-item v-for="n in Pimages.thumbs" :key="n.id">
+              <div
+                :style="active.id == n.id ? 'border:3px solid green' : ''"
+                class="ma-1"
+                @click="toggle(n)"
+              >
+                <v-img height="50px" width="50px" :src="n.url"></v-img>
+              </div>
+            </v-slide-item>
+          </v-slide-group>
         </v-col>
         <v-col>
           <v-col>
             <v-container>
               <v-row justify="start">
-                <v-col cols="">
-                  <h3>Overview</h3>
+                <v-col>
+                  <p class="text-h4">Overview</p>
                 </v-col>
               </v-row>
               <v-row justify="start" class="ml-4 text-left">
@@ -69,7 +82,7 @@
                   </v-row>
                 </v-col>
                 <v-col cols="12" sm="12" md="3" lg="3" class="">
-                  <v-card elevation="0" :width="width + '%'">
+                  <v-card elevation="0">
                     <div class="imgB">
                       <span class="">Quantity</span>
                     </div>
@@ -91,17 +104,36 @@
                   </v-card>
                 </v-col>
                 <v-col
-                  ><v-btn dark class="btn mt-2 mr-2" tile color="#09b750"
+                  ><v-btn
+                    dark
+                    class="btn mt-2 mr-2"
+                    tile
+                    elevation="0"
+                    color="btn"
+                    style="background-color:white;color:#09b750;border:1px solid #09b750;"
                     >Buy it Now</v-btn
                   >
-                  <v-btn class="btn mt-2 mr-2" tile dark color="#09b750"
+                  <v-btn
+                    class="btn mt-2 mr-2"
+                    tile
+                    dark
+                    elevation="0"
+                    color="btn"
+                    style="background-color:white;color:#09b750;border:1px solid #09b750;"
                     >Add to Cart</v-btn
                   ></v-col
                 >
               </v-row>
               <v-divider class="my-6"></v-divider>
               <v-row>
-                <v-btn dark color="#09b750" class="btn mr-3">Make Offer</v-btn>
+                <v-btn
+                  dark
+                  elevation="0"
+                  color="btn"
+                  style="background-color:white;color:#09b750;border:1px solid #09b750;"
+                  class="btn mr-3"
+                  >Make Offer</v-btn
+                >
 
                 <v-btn
                   elevation="0"
@@ -126,95 +158,48 @@ export default {
   },
   data() {
     return {
-      myImage:
-        "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
       tab: null,
-      favorited: false,
+      active: {
+        id: "1",
+        url_normal: "/images/1N.jpg",
+        url_zoom: "/images/1.jpg",
+      },
       sheet: false,
       rating: 4.5,
-      oldPrice: "$409.84",
-      newPrice: "$359.62",
-      seller: "Youngshop",
       quantity: 1,
-      carousel: 0,
-      data: [
-        {
-          property: "Port: ",
-          value_: "Any",
-        },
-        {
-          property: "Payment Terms: ",
-          value_: "Western Union,T/T,MoneyGram",
-        },
-        {
-          property: "Supply Ability: ",
-          value_: "15 Unit/Units per Week",
-        },
-        {
-          property: "Condition: ",
-          value_: "Used",
-        },
-        {
-          property: "Type: ",
-          value_: "PICKUP",
-        },
-      ],
-      leadData: [
-        {
-          units: "1 - 10 Units",
-          days: "5 days",
-        },
-        {
-          units: "> 10 Units",
-          days: "Negotiable",
-        },
-      ],
-
-      productImages: [
-        "/images/1N.jpg",
-        "/images/2N.jpg",
-        "/images/3N.jpg",
-        "/images/4N.jpg",
-        "/images/5N.jpg",
-        "/images/6N.jpg",
-      ],
-
       zoomerOptions: {
-        zoomFactor: 4,
-        pane: "container",
+        zoomFactor: 3,
+        pane: "pane",
         hoverDelay: 300,
-        namespace: "inline-container",
+        namespace: "zoomer-bottom",
         move_by_click: false,
-        scroll_items: 7,
+        scroll_items: 4,
         choosed_thumb_border_color: "#dd2c00",
         scroller_position: "bottom",
+        zoomer_pane_position: "right",
       },
       Pimages: {
         // optional, if not present will use normal_size instead
         thumbs: [
           {
             id: "1",
-            url: "/images/1N.jpg",
+            url: "/images/1S.jpg",
           },
           {
             id: "2",
-            url: "/images/2N.jpg",
+            url: "/images/2S.jpg",
           },
           {
             id: "3",
-            url: "/images/3N.jpg",
+            url: "/images/3S.jpg",
           },
           {
             id: "4",
-            url: "/images/4N.jpg",
+            url: "/images/4S.jpg",
           },
           {
             id: "5",
-            url: "/images/5N.jpg",
-          },
-          {
-            id: "6",
-            url: "/images/6N.jpg",
+            url: "/images/5S.jpg",
           },
         ],
 
@@ -240,10 +225,6 @@ export default {
             id: "5",
             url: "/images/5N.jpg",
           },
-          {
-            id: "6",
-            url: "/images/6N.jpg",
-          },
         ],
 
         //optional, if not present will use normal_size instead
@@ -268,142 +249,11 @@ export default {
             id: "5",
             url: "/images/5.jpg",
           },
-          {
-            id: "6",
-            url: "/images/6N.jpg",
-          },
         ],
       },
-
-      recommended: [
-        {
-          src:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
-          price: "$340.90",
-          quantity: "1 Piece (MOQ)",
-        },
-        {
-          src:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
-          price: "$340.90",
-          quantity: "1 Piece (MOQ)",
-        },
-        {
-          src:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
-          price: "$340.90",
-          quantity: "1 Piece (MOQ)",
-        },
-        // {
-        //   src: require("../assets/f_hilux.jpg"),
-        //   price: "$340.90",
-        //   quantity: "1 Piece (MOQ)",
-        // },
-      ],
-      hotSelling: [
-        {
-          src:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
-          price: "$340.90",
-          quantity: "3 Piece (MOQ)",
-        },
-        {
-          src:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
-          price: "$340.90",
-          quantity: "1 Piece (MOQ)",
-        },
-        {
-          src:
-            "http://45.76.97.89:3000/uploads/1e1f0f78e33d4ce7828d21465e84da7d.jpg",
-          price: "$340.90",
-          quantity: "1 Piece (MOQ)",
-        },
-        // {
-        //   src: require("../assets/hyundai.jpg"),
-        //   price: "$340.90",
-        //   quantity: "1 Piece (MOQ)",
-        // },
-      ],
-      description: [
-        {
-          desc:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-        },
-        {
-          desc: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-        },
-        {
-          desc:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit.Lorem ipsum dolor sit, amet consectetur adipisicing",
-        },
-      ],
-      sellImages: [
-        {
-          path: "/images/test.jpg",
-        },
-        {
-          path: "/images/test.jpg",
-        },
-        {
-          path: "/images/test.jpg",
-        },
-        {
-          path: "/images/test.jpg",
-        },
-      ],
     };
   },
-  computed: {
-    width() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return 100;
-        case "sm":
-          return 100;
-        case "md":
-          return 100;
-        case "lg":
-          return 100;
-        case "xl":
-          return 100;
-        default:
-          return 100;
-      }
-    },
-    marginTop() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return 0;
-        case "sm":
-          return 0;
-        case "md":
-          return 4;
-        case "lg":
-          return 6;
-        case "xl":
-          return 6;
-        default:
-          return 6;
-      }
-    },
-    btnWidth() {
-      switch (this.$vuetify.breakpoint.name) {
-        case "xs":
-          return 80;
-        case "sm":
-          return 80;
-        case "md":
-          return 60;
-        case "lg":
-          return 60;
-        case "xl":
-          return 60;
-        default:
-          return 60;
-      }
-    },
-  },
+  computed: {},
   methods: {
     increment() {
       this.quantity = parseInt(this.quantity, 10) + 1;
@@ -412,6 +262,15 @@ export default {
     decrement() {
       this.quantity =
         this.quantity > 1 ? parseInt(this.quantity, 10) - 1 : this.quantity;
+    },
+    toggle(n) {
+      this.active.url_normal = this.Pimages.normal_size.find(
+        (e) => e.id == n.id
+      ).url;
+      this.active.url_zoom = this.Pimages.large_size.find(
+        (e) => e.id == n.id
+      ).url;
+      this.active.id = n.id;
     },
   },
 };
@@ -424,35 +283,6 @@ export default {
 
 .case {
   text-transform: none;
-}
-.minusplusnumber {
-  border: 1px solid silver;
-  /* border-radius: 5px; */
-  background-color: #fff;
-  margin: 0 5px 0 5px;
-  display: inline-block;
-  user-select: none;
-}
-.minusplusnumber div {
-  display: inline-block;
-}
-.minusplusnumber #field_container input {
-  width: 50px;
-  text-align: center;
-  font-size: 15px;
-  padding: 8px;
-  border: none;
-}
-.minusplusnumber .mpbtn {
-  padding: 3px 10px 3px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-.minusplusnumber .mpbtn:hover {
-  background-color: #ddd;
-}
-.minusplusnumber .mpbtn:active {
-  background-color: #c5c5c5;
 }
 
 .favorite {
