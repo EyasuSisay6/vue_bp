@@ -2,6 +2,41 @@
   <div>
     <div class="hidden-md-and-down">
       <v-footer dark padless class="d-block text-center">
+        <v-card flat tile class="green lighten-1 white--text text-start">
+          <v-card-text>
+            <v-row align="center">
+              <v-spacer></v-spacer>
+              <v-col cols="5">
+                <v-list-item two-line>
+                  <v-list-item-content>
+                    <v-list-item-title>Newsletter</v-list-item-title>
+                    <v-list-item-subtitle
+                      >Subscribe to get information about products and
+                      coupons</v-list-item-subtitle
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-col>
+              <v-col cols="4">
+                <v-row align="center">
+                  <v-text-field
+                    solo
+                    dense
+                    flat
+                    light
+                    class="mt-7"
+                    height="50px"
+                    placeholder="Email Address"
+                  ></v-text-field>
+                  <v-btn color="black" dark height="50px" tile>Subscribe</v-btn>
+                </v-row>
+              </v-col>
+              <v-spacer></v-spacer>
+            </v-row>
+          </v-card-text>
+
+          <v-divider></v-divider>
+        </v-card>
         <v-card flat tile class="green lighten-1 white--text text-center">
           <v-card-text>
             <v-btn
@@ -18,6 +53,27 @@
 
           <v-card-text class="white--text pt-0">
             <v-row>
+              <v-spacer></v-spacer>
+              <v-col>
+                <v-list style="background-color:transparent;" dense flat>
+                  <v-subheader class="text-center text-h6 white--text pl-4"
+                    >Our Courses</v-subheader
+                  >
+                  <v-list-item-group>
+                    <v-list-item
+                      style="min-height:30px"
+                      v-for="(item, i) in courses"
+                      :key="i"
+                    >
+                      <v-list-item-content class="py-0">
+                        <v-list-item-title
+                          ><p class="text-start mb-0">{{ item }}</p>
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list-item-group>
+                </v-list>
+              </v-col>
               <v-spacer></v-spacer>
               <v-col>
                 <v-list style="background-color:transparent;" dense flat>
@@ -154,6 +210,13 @@ export default {
   data() {
     return {
       icons: ["mdi-facebook", "mdi-twitter", "mdi-linkedin", "mdi-instagram"],
+      courses: [
+        "Digital Marketing",
+        "Web Designer",
+        "MLM Trainings",
+        "Personal Development",
+        "Project Management",
+      ],
       about: ["Ashewa story", "Community", "Blog", "Job Vacancy", "Contact"],
       ec: ["Ashewa story", "Community", "Blog", "Job Vacancy", "Contact"],
       grow: ["Ashewa story", "Community", "Blog", "Job Vacancy", "Contact"],

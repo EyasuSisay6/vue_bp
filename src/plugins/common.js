@@ -7,6 +7,8 @@ import SubmitButton from "@/components/common/SubmitButton.vue";
 import ProjectDescription from "@/components/common/ProjectDescription.vue";
 import Countdown from "@/components/common/Countdown.vue";
 import VueCountdown from "@chenfengyuan/vue-countdown";
+import VuePhoneNumberInput from "vue-phone-number-input";
+import "vue-phone-number-input/dist/vue-phone-number-input.css";
 
 Vue.component("Heading", Heading);
 Vue.component("Description", Description);
@@ -16,3 +18,4 @@ Vue.component("SubmitButton", SubmitButton);
 Vue.component("ProjectDescription", ProjectDescription);
 Vue.component(`vue-${VueCountdown.name}`, VueCountdown);
 Vue.component(`Countdown`, Countdown);
+Vue.component("VuePhoneNumberInput", VuePhoneNumberInput);

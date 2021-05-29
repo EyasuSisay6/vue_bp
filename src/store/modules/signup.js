@@ -12,23 +12,19 @@ const actions = {
     const resp = await apolloClient
       .mutate({
         mutation: gql`
-          mutation {
-            newUser(
-              email: "${payload.email}"
-              fullName: "${payload.name}"
-              password: "${payload.password}"
-            ) {
-              payload {
-                username
-                firstName
-                lastName
-                isStaff
-                userId
-                phone
-                password
-              }
+        mutation {
+          newUser(username: "${payload.userName}", email: "${payload.email}", firstName: "${payload.firstname}", lastName: "${payload.lastname}", phone: "${payload.phone}", password: "${payload.password}",profilePic:"") {
+            payload {
+              username
+              firstName
+              lastName
+              isStaff
+              id
+              phone
+              profilePic
             }
           }
+        }
         `,
       })
       .then(() => {

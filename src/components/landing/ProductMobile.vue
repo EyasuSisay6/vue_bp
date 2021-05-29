@@ -1,74 +1,93 @@
 <template>
-  <div style="width:150px">
+  <div style="width:180px;margin:auto auto">
     <!-- :src="`http://188.166.153.99/media/${productImages[0].image}`" -->
-    <v-card width="150">
-      <v-img
-        :src="productImages.image[0]"
-        class="white--text align-end"
-        gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-        width="150"
-        height="150"
-      >
-        <v-card-title class="text-md-h6 text-subtitle-2"
-          >{{ sellingPrice }} ETB</v-card-title
+    <v-card @mouseenter="mo = true" @mouseleave="mo = false" class="pa-1">
+      <v-card width="179">
+        <v-img
+          :src="productImages.image[0]"
+          class="white--text align-end"
+          width="179"
+          height="150"
         >
-      </v-img>
+          <div style="background-color: rgba(0, 0, 0, 0.336);">
+            <v-rating
+              :value="3"
+              readonly
+              background-color="green lighten-3"
+              color="#09B750"
+              x-small
+            ></v-rating>
+          </div>
+        </v-img>
+      </v-card>
+      <p class="text-subtitle-2 ma-0 pa-0 ml-2 mt-1 text-start">
+        {{ productName }}
+      </p>
+      <v-card-title
+        class="text-md-h6 ma-0 pa-0 ml-2 text-subtitle-1 "
+        style="font-weight:bolder"
+        >{{ sellingPrice }} ETB</v-card-title
+      >
+      <p
+        class="text-caption ma-0 pa-0 ml-2 text-start grey--text"
+        style="font-weight:lighter"
+      >
+        +shipping 100.0
+      </p>
+      <p
+        class="text-caption ma-0 pa-0 ml-2 mt-1 text-start grey-darken-4--text"
+        style="font-weight:lighter"
+      >
+        <v-icon small>mdi-pin</v-icon> Bole
+      </p>
+      <v-divider v-if="mo"></v-divider>
+      <v-row v-if="mo" class="mt-1 mb-2" justify="center">
+        <v-btn
+          @click="
+            addToCart({
+              image: productImages.image[0],
+              price: sellingPrice,
+              title: productName,
+              id: productId,
+              category: productCategory.categoryName,
+            })
+          "
+          icon
+          class="hover-icon"
+          style=""
+          ><v-icon small>mdi-cart-outline</v-icon></v-btn
+        >
+        <v-btn
+          @click="
+            $router.push({
+              path: `/ProductDetails/${productId}`,
+            })
+          "
+          icon
+          class="hover-icon"
+          style=""
+          ><v-icon small>mdi-eye-outline</v-icon></v-btn
+        >
+        <v-btn
+          @click="
+            addToWish({
+              image: productImages.image[0],
+              price: sellingPrice,
+              title: productName,
+              id: productId,
+              category: productCategory.categoryName,
+            })
+          "
+          icon
+          class="hover-icon"
+          style=""
+          ><v-icon small>mdi-heart-outline</v-icon></v-btn
+        >
+        <v-btn icon class="hover-icon" style=""
+          ><v-icon small>mdi-chart-box-outline</v-icon></v-btn
+        >
+      </v-row>
     </v-card>
-    <p class="text-subtitle-2 ma-0 pa-0">{{ productName }}</p>
-    <v-rating
-      :value="3"
-      readonly
-      background-color="green lighten-3"
-      color="#09B750"
-      x-small
-    ></v-rating>
-    <v-divider></v-divider>
-    <v-row class="mt-1 mb-2" justify="center">
-      <v-btn
-        @click="
-          addToCart({
-            image: productImages.image[0],
-            price: sellingPrice,
-            title: productName,
-            id: productId,
-            category: productCategory.categoryName,
-          })
-        "
-        icon
-        class="hover-icon"
-        style=""
-        ><v-icon small>mdi-cart-outline</v-icon></v-btn
-      >
-      <v-btn
-        @click="
-          $router.push({
-            path: `/ProductDetails/${productId}`,
-          })
-        "
-        icon
-        class="hover-icon"
-        style=""
-        ><v-icon small>mdi-eye-outline</v-icon></v-btn
-      >
-      <v-btn
-        @click="
-          addToWish({
-            image: productImages.image[0],
-            price: sellingPrice,
-            title: productName,
-            id: productId,
-            category: productCategory.categoryName,
-          })
-        "
-        icon
-        class="hover-icon"
-        style=""
-        ><v-icon small>mdi-heart-outline</v-icon></v-btn
-      >
-      <v-btn icon class="hover-icon" style=""
-        ><v-icon small>mdi-chart-box-outline</v-icon></v-btn
-      >
-    </v-row>
   </div>
 </template>
 
@@ -111,14 +130,23 @@ export default {
   data() {
     return {
       sh: false,
+      mo: false,
     };
   },
   methods: {
     addToCart(product) {
-      this.$store.commit("ADD_PRODUCT_TO_CART_LIST", product);
+      if (!this.$store.state.auth.isTokenSet) {
+        this.$router.push({ path: "/login" });
+      } else {
+        this.$store.commit("ADD_PRODUCT_TO_CART_LIST", product);
+      }
     },
     addToWish(product) {
-      this.$store.commit("ADD_PRODUCT_TO_WISH_LIST", product);
+      if (!this.$store.state.auth.isTokenSet) {
+        this.$router.push({ path: "/login" });
+      } else {
+        this.$store.commit("ADD_PRODUCT_TO_WISH_LIST", product);
+      }
     },
   },
 };

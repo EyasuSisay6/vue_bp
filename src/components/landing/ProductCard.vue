@@ -123,10 +123,18 @@ export default {
   },
   methods: {
     addToCart(product) {
-      this.$store.commit("ADD_PRODUCT_TO_CART_LIST", product);
+      if (!this.$store.state.auth.isTokenSet) {
+        this.$router.push({ name: "login" });
+      } else {
+        this.$store.commit("ADD_PRODUCT_TO_CART_LIST", product);
+      }
     },
     addToWish(product) {
-      this.$store.commit("ADD_PRODUCT_TO_WISH_LIST", product);
+      if (!this.$store.state.auth.isTokenSet) {
+        this.$router.push({ name: "login" });
+      } else {
+        this.$store.commit("ADD_PRODUCT_TO_WISH_LIST", product);
+      }
     },
   },
 };

@@ -143,7 +143,7 @@
             </v-row>
             <v-row>
               <v-col md="3" v-for="(n, index) in all" :key="index">
-                <ProductCard
+                <ProductMobile
                   :vendor="n.vendor"
                   :productName="n.name"
                   :productImages="n.productimageSet"
@@ -164,9 +164,11 @@
 
 <script>
 import ProductCard from "./landing/ProductCard";
+import ProductMobile from "./landing/ProductMobile";
 export default {
   components: {
     ProductCard,
+    ProductMobile,
   },
   created() {
     this.getFilteredProducts();
