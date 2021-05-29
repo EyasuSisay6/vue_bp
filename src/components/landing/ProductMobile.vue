@@ -1,13 +1,13 @@
 <template>
-  <div style="width:180px;margin:auto auto">
+  <div style="width:140px;margin:auto auto">
     <!-- :src="`http://188.166.153.99/media/${productImages[0].image}`" -->
     <v-card @mouseenter="mo = true" @mouseleave="mo = false" class="pa-1">
-      <v-card width="179">
+      <v-card width="139">
         <v-img
           :src="productImages.image[0]"
           class="white--text align-end"
-          width="179"
-          height="150"
+          width="139"
+          height="100"
         >
           <div style="background-color: rgba(0, 0, 0, 0.336);">
             <v-rating
