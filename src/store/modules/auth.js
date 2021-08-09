@@ -14,32 +14,84 @@ const getters = {
 };
 
 const actions = {
-  async userLogin({ commit }, payload) {
+  async updateUser({ commit }, payload) {
     commit(types.SHOW_LOADING, true);
     const resp = await apolloClient
       .mutate({
         mutation: gql`
-          mutation tokeAuth {
-            tokenAuth(username: "${payload.email}", password: "${payload.password}") {
-              payload
-              token
+          mutation{
+            updateProfile(email: "${payload.email}",firstName: "${payload.firstName}",lastName: "${payload.lastName}",id:"${payload.id}",phone:"",profilePic:"") {
+              payload{
+                id
+                firstName
+                lastName
+                username
+                phone
+                email
+                profilePic
+              }
             }
           }
         `,
       })
       .then((response) => {
-        // commit(types.SHOW_LOADING, false);
-        // if (response.status === 200) {
+        window.localStorage.setItem(
+          "user",
+          JSON.stringify({
+            auth: false,
+            ...response.data.updateProfile.payload,
+          })
+        );
+
+        commit(types.SAVE_USER, {
+          auth: false,
+          ...response.data.updateProfile.payload,
+        });
+
+        commit(types.SHOW_LOADING, false);
+      })
+      .catch((error) => {
+        console.log(error);
+        handleError(error, commit, resp);
+      });
+  },
+  async userLogin({ commit }, payload) {
+    commit(types.SHOW_LOADING, true);
+    const resp = await apolloClient
+      .mutate({
+        mutation: gql`
+          mutation{
+            tokenAuth(username: "${payload.email}", password: "${payload.password}") {
+              token
+              user{
+                id
+                firstName
+                lastName
+                username
+                phone
+                email
+                profilePic
+                password
+              }
+            }
+          }
+        `,
+      })
+      .then((response) => {
+        console.log({ auth: false, ...response.data.tokenAuth.user });
         onLogin(apolloClient, response.data.tokenAuth.token);
         window.localStorage.setItem(
           "user",
-          JSON.stringify(response.data.tokenAuth.payload)
+          JSON.stringify({ auth: false, ...response.data.tokenAuth.user })
         );
         window.localStorage.setItem(
           "token",
           JSON.stringify(response.data.tokenAuth.token)
         );
-        commit(types.SAVE_USER, response.data.tokenAuth.payload);
+        commit(types.SAVE_USER, {
+          auth: false,
+          ...response.data.tokenAuth.user,
+        });
         commit(types.SAVE_TOKEN, response.data.tokenAuth.token);
         console.log(response.data.tokenAuth);
         // dispatch("getAllProducts", { page: 1, pageSize: 6 });
@@ -57,7 +109,7 @@ const actions = {
       });
   },
   autoLogin({ commit }) {
-    onLogin(apolloClient, localStorage.getItem("token"));
+    onLogin(apolloClient, localStorage.getItem("apollo-token"));
     const user = JSON.parse(localStorage.getItem("user"));
     commit(types.SAVE_USER, user);
     commit(types.SAVE_TOKEN, JSON.parse(localStorage.getItem("token")));

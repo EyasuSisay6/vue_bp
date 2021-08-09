@@ -13,7 +13,7 @@ const actions = {
       .mutate({
         mutation: gql`
         mutation {
-          newUser(username: "${payload.userName}", email: "${payload.email}", firstName: "${payload.firstname}", lastName: "${payload.lastname}", phone: "${payload.phone}", password: "${payload.password}",profilePic:"") {
+          newUser(username: "${payload.userName}", email: "${payload.email}", firstName: "${payload.firstName}", lastName: "${payload.lastName}", phone: "${payload.phone}", password: "${payload.password}", profilePic: "") {
             payload {
               username
               firstName
@@ -24,12 +24,11 @@ const actions = {
               profilePic
             }
           }
-        }
-        `,
+        }`,
       })
       .then(() => {
         ctx.dispatch("userLogin", {
-          email: payload.email,
+          email: payload.userName,
           password: payload.password,
         });
       })

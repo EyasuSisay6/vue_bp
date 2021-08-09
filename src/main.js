@@ -1,5 +1,4 @@
 import Vue from "vue";
-import "@/plugins/axios";
 import vuetify from "@/plugins/vuetify";
 import "@/plugins/veevalidate";
 import "@/plugins/common";

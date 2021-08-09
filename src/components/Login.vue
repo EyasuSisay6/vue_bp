@@ -1,5 +1,5 @@
 <template>
-  <v-container style="background-color:white" fluid class="my-10">
+  <v-container style="background-color: white" fluid class="my-10">
     <v-layout row wrap class="mx-10">
       <Heading :title="$t('login.TITLE')" />
       <v-flex xs12 sm6 offset-sm3>
@@ -38,11 +38,11 @@
               </v-flex>
               <v-flex text-xs-center>
                 <v-btn
-                  :to="{ name: 'landing' }"
+                  :to="{ name: 'signup' }"
                   small
                   text
                   class="btnForgotPassword"
-                  >{{ $t("login.FORGOT_PASSWORD") }}</v-btn
+                  >Don't have account yet?</v-btn
                 >
               </v-flex>
             </v-layout>

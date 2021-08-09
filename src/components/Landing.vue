@@ -1,13 +1,6 @@
 <template>
-  <div>
-    <LandingContent />
-  </div>
+  <div>Landing</div>
 </template>
 <script>
-import LandingContent from "./landing/LandingContent";
-export default {
-  components: {
-    LandingContent,
-  },
-};
+export default {};
 </script>

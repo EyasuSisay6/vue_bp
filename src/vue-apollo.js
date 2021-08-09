@@ -14,17 +14,15 @@ const AUTH_TOKEN = "apollo-token";
 
 // Http endpoint
 const httpEndpoint =
-  process.env.VUE_APP_GRAPHQL_HTTP || "http://188.166.153.99/graphql/";
+  process.env.VUE_APP_GRAPHQL_HTTP || "https://api.ashewa.com/graphql/";
 
 const authLink = setContext(async (_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = JSON.parse(localStorage.getItem("apollo-token"));
-  // Return the headers to the context so httpLink can read them
+  const token = localStorage.getItem("apollo-token");
 
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : "",
+      Authorization: token ? `JWT ${token}` : "",
     },
   };
 });
@@ -37,7 +35,7 @@ const defaultOptions = {
   // Use `null` to disable subscriptions
   link: authLink,
   // LocalStorage token
-  tokenName: AUTH_TOKEN,
+  //tokenName: AUTH_TOKEN,
   // Enable Automatic Query persisting with Apollo Engine
   persisting: false,
   // Use websockets for everything (no HTTP)

@@ -410,15 +410,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "appTitle",
-      "isTokenSet",
-      "user",
-      "totalWishList",
-      "totalCartList",
-      "categories",
-      "sampleCategories",
-    ]),
+    ...mapGetters(["appTitle", "isTokenSet", "user"]),
     admin() {
       return this.user !== null ? this.user.role === "admin" : false;
     },
