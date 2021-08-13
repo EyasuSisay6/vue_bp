@@ -11,7 +11,7 @@
                   <v-text-field
                     id="userName"
                     name="userName"
-                    label="User Name"
+                    label="Company Name"
                     v-model="userName"
                     :error="errors.length > 0"
                     :error-messages="errors[0]"

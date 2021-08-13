@@ -4,7 +4,11 @@
     <div class="ma-10">
       <v-row justify="center" class="ma-0">
         <v-col cols="12">
-          <v-data-table :headers="headers" :items="data0" :items-per-page="5">
+          <v-data-table
+            :headers="headers"
+            :items="sampleData"
+            :items-per-page="5"
+          >
             <template v-slot:[`item.status`]="{ item }">
               <v-chip label :color="getColor(item.status)" dark>
                 {{ item.status }}

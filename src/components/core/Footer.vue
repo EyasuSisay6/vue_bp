@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-footer height="60"> Test Footer </v-footer>
+    <v-footer>
+      <v-spacer></v-spacer>
+      <div>
+        Ashewa Delivery
+      </div>
+      <v-spacer></v-spacer>
+    </v-footer>
   </div>
 </template>
 

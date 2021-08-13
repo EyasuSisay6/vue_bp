@@ -1,6 +1,5 @@
 <template>
   <v-app>
-    <Toolbar />
     <v-main
       :style="
         $vuetify.theme.dark
@@ -21,7 +20,6 @@
 </template>
 
 <script>
-import Toolbar from "@/components/core/Toolbar.vue";
 import Loading from "@/components/core/Loading.vue";
 import Footer from "@/components/core/Footer.vue";
 
@@ -49,7 +47,6 @@ export default {
     };
   },
   components: {
-    Toolbar,
     Loading,
     Footer,
   },

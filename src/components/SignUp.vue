@@ -7,34 +7,6 @@
           <form @submit.prevent="handleSubmit(submit)">
             <v-layout column>
               <v-flex>
-                <ValidationProvider rules="required" v-slot="{ errors }">
-                  <v-text-field
-                    id="firstName"
-                    name="firstName"
-                    label="First Name"
-                    v-model="firstName"
-                    :error="errors.length > 0"
-                    :error-messages="errors[0]"
-                    autocomplete="off"
-                  ></v-text-field>
-                </ValidationProvider>
-              </v-flex>
-
-              <v-flex>
-                <ValidationProvider rules="required" v-slot="{ errors }">
-                  <v-text-field
-                    id="lastName"
-                    name="lastName"
-                    label="Last Name"
-                    v-model="lastName"
-                    :error="errors.length > 0"
-                    :error-messages="errors[0]"
-                    autocomplete="off"
-                  ></v-text-field>
-                </ValidationProvider>
-              </v-flex>
-
-              <v-flex>
                 <ValidationProvider rules="required|email" v-slot="{ errors }">
                   <v-text-field
                     id="email"
@@ -53,7 +25,7 @@
                   <v-text-field
                     id="userName"
                     name="userName"
-                    label="User Name"
+                    label="Company Name"
                     v-model="userName"
                     :error="errors.length > 0"
                     :error-messages="errors[0]"
@@ -103,53 +75,6 @@
                   ></v-text-field>
                 </ValidationProvider>
               </v-flex>
-              <v-flex>
-                <v-select
-                  id="accountType"
-                  label="Account Type"
-                  name="accountType"
-                  v-model="accountType"
-                  :items="[
-                    'Customer',
-                    'Vendor',
-                    'Supplier',
-                    'Delivery Personal',
-                    'Affiliate',
-                  ]"
-                  color="#09B750"
-                />
-              </v-flex>
-              <div
-                v-if="
-                  accountType == 'Vendor' ||
-                    accountType == 'Supplier' ||
-                    accountType == 'Affiliate'
-                "
-              >
-                <v-flex>
-                  <v-text-field
-                    label="Phone Number"
-                    name="phoneNumber"
-                    type="text"
-                    color="#09B750"
-                  />
-                </v-flex>
-                <v-flex>
-                  <v-text-field
-                    label="Commission"
-                    name="commission"
-                    type="text"
-                    color="#09B750"
-                  />
-                </v-flex>
-                <v-flex>
-                  <v-text-field
-                    label="License Number"
-                    name="licenseNumber"
-                    type="text"
-                  />
-                </v-flex>
-              </div>
               <v-flex text-xs-center mt-5>
                 <SubmitButton :buttonText="$t('signup.SIGN_ME_UP')" />
               </v-flex>
@@ -177,6 +102,7 @@ export default {
     return {
       firstName: "",
       lastName: "",
+      userName: "",
       yourValue: "",
       accountType: "",
       email: "",
@@ -197,8 +123,6 @@ export default {
         phone: this.yourValue,
       });
       await this.userSignUp({
-        firstName: this.firstName,
-        lastName: this.lastName,
         userName: this.userName,
         email: this.email,
         password: this.password,
