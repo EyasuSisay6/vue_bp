@@ -4,7 +4,17 @@
     <div class="ma-10">
       <v-row justify="center" class="ma-0">
         <v-col cols="12">
-          <v-data-table :headers="headers" :items="dataO" :items-per-page="5">
+          <v-data-table :headers="headers" :items="dataO" :items-per-page="7">
+            <template v-slot:[`item.products`]="{ item }">
+              <p v-for="p in item.products" :key="p.id">
+                {{ p.name }}
+              </p>
+            </template>
+            <template v-slot:[`item.vendors`]="{ item }">
+              <p v-for="p in item.vendors" :key="p.id">
+                {{ p.vendor.storeName }}
+              </p>
+            </template>
             <template v-slot:[`item.status`]="{ item }">
               <v-chip label :color="getColor(item.status)" dark>
                 {{ item.status }}
@@ -67,16 +77,10 @@
               <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
                 Product
               </p>
-              <v-text-field
-                background-color="#ebe9e9"
-                class="mb-0"
-                height="50"
-                solo
-                flat
-                :value="selectedProduct.productId"
-                disabled
-              ></v-text-field
-            ></v-col>
+              <p v-for="(p, i) in selectedProduct.products" :key="p.id">
+                {{ i + 1 }}: {{ p.name }}
+              </p>
+            </v-col>
           </v-row>
           <v-divider></v-divider>
           <v-row class="ma-0">
@@ -90,6 +94,16 @@
                 </p>
                 <p class="text-subtitle-2 mx-1 font-weight-bold mb-1 subTitle">
                   Phone Number : {{ selectedProduct.phone }}
+                </p>
+              </div>
+            </v-col>
+            <v-col>
+              <div background-color="#ebe9e9">
+                <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
+                  Vendors Information
+                </p>
+                <p v-for="p in selectedProduct.products" :key="p.id">
+                  {{ p.vendor.storeName }}: {{ p.vendor.phone }}
                 </p>
               </div>
             </v-col>
@@ -248,8 +262,8 @@ export default {
           value: "id",
         },
         { text: "User", value: "username" },
-        { text: "Product", value: "productId" },
-        { text: "Amount", value: "price" },
+        { text: "Products", value: "products" },
+        { text: "Vendors", value: "vendors" },
         { text: "Total Distance (in km)", value: "totalDistance" },
         { text: "Delivery Price (in Birr)", value: "deliveryPrice" },
         { text: "Total Price (in Birr)", value: "totalPrice" },
@@ -278,10 +292,11 @@ export default {
           id: item.id,
           username: item.user.username,
           phone: item.user.phone,
-          productId: Object.keys(JSON.parse(item.productIds)),
+          products: item.products,
           amount: item.price,
           totalDistance: item.deliveryOption.totalDistance,
           deliveryPrice: item.deliveryOption.deliveryPrice,
+          vendors: item.products,
           totalPrice: item.price,
           status: item.status,
         };
@@ -300,7 +315,7 @@ export default {
             status: item.status,
           };
         });
-        return ordersC.filter((item) => item.status == "COMPLETED");
+        return ordersC.filter((item) => item.status == "completed");
       }
       if (this.filter == "canceled") {
         const ordersCa = this.$store.state.orders.canceled.map((item) => {
@@ -316,15 +331,15 @@ export default {
             status: item.status,
           };
         });
-        return ordersCa.filter((item) => item.status == "CANCELED");
+        return ordersCa.filter((item) => item.status == "canceled");
       }
-      return orders.filter((item) => item.status == "PENDING");
+      return orders.filter((item) => item.status == "pending");
     },
   },
   methods: {
     getColor(status) {
-      if (status == "COMPLETED") return "green";
-      else if (status == "PENDING") return "orange";
+      if (status == "completed") return "green";
+      else if (status == "pending") return "orange";
       else return "red";
     },
     changeStatus() {

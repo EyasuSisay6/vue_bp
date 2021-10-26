@@ -43,30 +43,40 @@ const actions = {
         query: gql`
           {
             currentOrder {
-              id
-              createdAt
-              user {
-                username
-                phone
-                email
-              }
-              deliveryOption {
-                totalDistance
-                deliveryPrice
-                provider {
-                  name
+              objects {
+                id
+
+                user {
+                  username
+                  phone
+                  email
                 }
+                deliveryOption {
+                  totalDistance
+                  deliveryPrice
+                  provider {
+                    name
+                  }
+                }
+                products {
+                  id
+                  name
+                  vendor {
+                    storeName
+                    phone
+                  }
+                }
+                price
+                status
               }
-              productIds
-              price
-              status
             }
           }
         `,
       })
       .then((response) => {
         commit(types.SHOW_LOADING, false);
-        commit(types.SAVE_ALL_PENDING, response.data.currentOrder);
+        console.log(response.data.currentOrder.objects);
+        commit(types.SAVE_ALL_PENDING, response.data.currentOrder.objects);
       })
       .catch((error) => {
         handleError(error, commit, resp);
@@ -78,30 +88,39 @@ const actions = {
         query: gql`
           {
             currentOrder(status: "completed") {
-              id
-              createdAt
-              user {
-                username
-                phone
-                email
-              }
-              deliveryOption {
-                totalDistance
-                deliveryPrice
-                provider {
-                  name
+              objects {
+                id
+
+                user {
+                  username
+                  phone
+                  email
                 }
+                deliveryOption {
+                  totalDistance
+                  deliveryPrice
+                  provider {
+                    name
+                  }
+                }
+                products {
+                  id
+                  name
+                  vendor {
+                    storeName
+                    phone
+                  }
+                }
+                price
+                status
               }
-              productIds
-              price
-              status
             }
           }
         `,
       })
       .then((response) => {
         console.log(response.data.currentOrder);
-        commit(types.SAVE_ALL_COMPLETED, response.data.currentOrder);
+        commit(types.SAVE_ALL_COMPLETED, response.data.currentOrder.objects);
       })
       .catch((error) => {
         handleError(error, commit, resp);
@@ -113,30 +132,38 @@ const actions = {
         query: gql`
           {
             currentOrder(status: "canceled") {
-              id
-              createdAt
-              user {
-                username
-                phone
-                email
-              }
-              deliveryOption {
-                totalDistance
-                deliveryPrice
-                provider {
-                  name
+              objects {
+                id
+
+                user {
+                  username
+                  phone
+                  email
                 }
+                deliveryOption {
+                  totalDistance
+                  deliveryPrice
+                  provider {
+                    name
+                  }
+                }
+                products {
+                  id
+                  name
+                  vendor {
+                    storeName
+                    phone
+                  }
+                }
+                price
+                status
               }
-              productIds
-              price
-              status
             }
           }
         `,
       })
       .then((response) => {
-        console.log(response.data.filterOrders);
-        commit(types.SAVE_ALL_CANCELED, response.data.currentOrder);
+        commit(types.SAVE_ALL_CANCELED, response.data.currentOrder.objects);
       })
       .catch((error) => {
         handleError(error, commit, resp);
