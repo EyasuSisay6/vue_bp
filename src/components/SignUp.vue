@@ -25,8 +25,43 @@
                   <v-text-field
                     id="userName"
                     name="userName"
-                    label="Company Name"
+                    label="Name"
                     v-model="userName"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                  <v-select
+                    id="deliveryType"
+                    name="deliveryType"
+                    label="Delivery Type"
+                    :items="[
+                      'EMS',
+                      'DHL',
+                      'CASH ON DELIVERY',
+                      'RIDE DELIVERY',
+                      'MOTER CYCLE',
+                      'PHYSICAL PICK',
+                      'BUS',
+                    ]"
+                    v-model="deliveryType"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                  ></v-select>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                  <v-text-field
+                    id="address"
+                    name="address"
+                    label="Address"
+                    v-model="address"
                     :error="errors.length > 0"
                     :error-messages="errors[0]"
                     autocomplete="off"
@@ -103,6 +138,7 @@ export default {
       firstName: "",
       lastName: "",
       userName: "",
+      deliveryType: "",
       yourValue: "",
       accountType: "",
       email: "",
@@ -127,6 +163,8 @@ export default {
         email: this.email,
         password: this.password,
         phone: this.yourValue,
+        address: this.address,
+        deliveryType: this.deliveryType,
       });
     },
   },

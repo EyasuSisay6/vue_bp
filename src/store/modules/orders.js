@@ -14,28 +14,59 @@ const getters = {
 };
 
 const actions = {
+  async changeStatus({ commit }, value) {
+    commit(types.SHOW_LOADING, true);
+    const resp = await apolloClient
+      .mutate({
+        mutation: gql`mutation{
+        updateOrderStatus(id:"${value.id}",reference:"${value.reference}",status:"${value.status}"){
+          payload{
+            id
+          }
+        }
+      }`,
+      })
+      .then((response) => {
+        commit(types.SHOW_LOADING, false);
+        console.log(response.data.updateOrderStatus);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+        handleError(error, commit, resp);
+      });
+  },
   async getPending({ commit }) {
+    commit(types.SHOW_LOADING, true);
     const resp = await apolloClient
       .query({
         query: gql`
           {
-            filterOrders(status: "pending") {
+            currentOrder {
               id
+              createdAt
               user {
-                id
                 username
                 phone
+                email
               }
+              deliveryOption {
+                totalDistance
+                deliveryPrice
+                provider {
+                  name
+                }
+              }
+              productIds
               price
               status
-              paid
             }
           }
         `,
       })
       .then((response) => {
-        console.log(response.data.filterOrders);
-        commit(types.SAVE_ALL_PENDING, response.data.filterProds);
+        commit(types.SHOW_LOADING, false);
+        commit(types.SAVE_ALL_PENDING, response.data.currentOrder);
       })
       .catch((error) => {
         handleError(error, commit, resp);
@@ -46,23 +77,31 @@ const actions = {
       .query({
         query: gql`
           {
-            filterOrders(status: "completed") {
+            currentOrder(status: "completed") {
               id
+              createdAt
               user {
-                id
                 username
                 phone
+                email
               }
+              deliveryOption {
+                totalDistance
+                deliveryPrice
+                provider {
+                  name
+                }
+              }
+              productIds
               price
               status
-              paid
             }
           }
         `,
       })
       .then((response) => {
-        console.log(response.data.filterOrders);
-        commit(types.SAVE_ALL_COMPLETED, response.data.filterProds);
+        console.log(response.data.currentOrder);
+        commit(types.SAVE_ALL_COMPLETED, response.data.currentOrder);
       })
       .catch((error) => {
         handleError(error, commit, resp);
@@ -73,23 +112,31 @@ const actions = {
       .query({
         query: gql`
           {
-            filterOrders(status: "canceled") {
+            currentOrder(status: "canceled") {
               id
+              createdAt
               user {
-                id
                 username
                 phone
+                email
               }
+              deliveryOption {
+                totalDistance
+                deliveryPrice
+                provider {
+                  name
+                }
+              }
+              productIds
               price
               status
-              paid
             }
           }
         `,
       })
       .then((response) => {
         console.log(response.data.filterOrders);
-        commit(types.SAVE_ALL_CANCELED, response.data.filterProds);
+        commit(types.SAVE_ALL_CANCELED, response.data.currentOrder);
       })
       .catch((error) => {
         handleError(error, commit, resp);
@@ -129,10 +176,10 @@ const mutations = {
     state.orders = orders;
   },
   [types.SAVE_ALL_CANCELED](state, orders) {
-    state.orders = orders;
+    state.canceled = orders;
   },
   [types.SAVE_ALL_COMPLETED](state, orders) {
-    state.orders = orders;
+    state.completed = orders;
   },
   [types.SAVE_ALL_DELAYED](state, orders) {
     state.orders = orders;
@@ -144,6 +191,7 @@ const state = {
   completed: [],
   delayed: [],
   canceled: [],
+  orders: [],
 };
 
 export default {
