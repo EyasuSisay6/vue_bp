@@ -1,89 +1,125 @@
 <template>
-  <v-container style="background-color: white" fluid class="my-10">
-    <v-layout row wrap class="mx-10">
-      <Heading :title="$t('login.TITLE')" />
-      <v-flex xs12 sm6 offset-sm3>
-        <ValidationObserver v-slot="{ handleSubmit }">
-          <form @submit.prevent="handleSubmit(submit)">
-            <v-layout column>
-              <v-flex>
-                <ValidationProvider rules="required" v-slot="{ errors }">
-                  <v-text-field
-                    id="userName"
-                    name="userName"
-                    label="Company Name"
-                    v-model="userName"
-                    :error="errors.length > 0"
-                    :error-messages="errors[0]"
-                    autocomplete="off"
-                  ></v-text-field>
-                </ValidationProvider>
-              </v-flex>
-              <v-flex>
-                <ValidationProvider rules="required|min:5" v-slot="{ errors }">
-                  <v-text-field
-                    id="password"
-                    name="password"
-                    type="password"
-                    :label="$t('login.PASSWORD')"
-                    v-model="password"
-                    :error="errors.length > 0"
-                    :error-messages="errors[0]"
-                    autocomplete="off"
-                  ></v-text-field>
-                </ValidationProvider>
-              </v-flex>
-              <v-flex text-xs-center mt-5 mb-3>
-                <SubmitButton :buttonText="$t('login.LOGIN')" />
-              </v-flex>
-              <v-flex text-xs-center>
-                <v-btn
-                  :to="{ name: 'signup' }"
-                  small
-                  text
-                  class="btnForgotPassword"
-                  >Don't have account yet?</v-btn
+  <div class="login">
+    <v-container fluid fill-height class="loginOverlay">
+      <v-layout flex align-center justify-center>
+        <v-flex xs12 sm4>
+          <v-card>
+            <v-card-title>
+              <h4>Delivery account sign in</h4>
+            </v-card-title>
+            <v-card-text class="pt-4">
+              <v-form ref="form">
+                <v-text-field
+                  label="Username"
+                  v-model="email"
+                  type="email"
+                  required
+                  append-icon="fa-info-circle"
+                ></v-text-field>
+                <v-text-field
+                  label="Password"
+                  v-model="password"
+                  append-icon="fa-info-circle"
+                  type="password"
+                  required
+                ></v-text-field>
+              </v-form>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn @click="submit" class="green white--text">Sign in</v-btn>
+            </v-card-actions>
+          </v-card>
+          <v-card>
+            <v-card-actions>
+              <v-row>
+                <span style="font-size:16px" class="row-item border"
+                  >Delivery</span
                 >
-              </v-flex>
-            </v-layout>
-          </form>
-        </ValidationObserver>
-      </v-flex>
-      <ErrorMessage />
-    </v-layout>
-  </v-container>
+                <a
+                  style="font-size:16px"
+                  class="link-color row-item border"
+                  href="https://ashewa.com/sellOnAshewa"
+                  >About</a
+                >
+                <a
+                  style="font-size:16px"
+                  class="link-color row-item"
+                  href="https://retailer.ashewa.com/ship "
+                  >Shipping Policy</a
+                >
+              </v-row>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+    <ErrorMessage />
+  </div>
 </template>
 
 <script>
-import router from "@/router";
 import { mapActions } from "vuex";
-
 export default {
-  metaInfo() {
-    return {
-      title: this.$store.getters.appTitle,
-      titleTemplate: `${this.$t("login.TITLE")} - %s`,
-    };
-  },
-  data() {
-    return {
-      userName: "",
-      password: "",
-    };
-  },
+  data: () => ({
+    email: "",
+    password: "",
+  }),
   methods: {
     ...mapActions(["userLogin"]),
     async submit() {
       await this.userLogin({
-        email: this.userName,
+        email: this.email,
         password: this.password,
       });
     },
   },
-  created() {
-    if (this.$store.state.auth.isTokenSet) {
-      router.push({ name: "landing" });
-    }
-  },
 };
 </script>
+
+<style scoped>
+.login {
+  height: 100vh;
+}
+h4 {
+  font-size: 1em !important;
+  padding: 1em;
+  color: black;
+}
+.v-card {
+  text-align: center;
+  margin: 1em;
+}
+.v-card__title {
+  justify-content: center;
+}
+.v-btn {
+  width: 100%;
+}
+.link-color {
+  color: #d38841;
+  text-decoration: none;
+}
+.v-card {
+  padding: 1em;
+}
+.v-card__actions {
+  display: block;
+}
+.green {
+  margin-bottom: 1em;
+}
+.create {
+  text-transform: capitalize;
+  margin-bottom: 1em;
+}
+.row {
+  font-size: 0.7em;
+  justify-content: center;
+}
+.row-item {
+  padding: 0 0.7em;
+}
+.border {
+  border-right: 1px solid black;
+}
+</style>
