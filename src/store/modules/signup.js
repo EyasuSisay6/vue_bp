@@ -9,16 +9,6 @@ let apolloClient = createProvider().defaultClient;
 const actions = {
   async userSignUp(ctx, payload) {
     ctx.commit(types.SHOW_LOADING, true);
-    console.log(`
-    mutation {
-      userSignup(username: "${payload.userName}", email: "${payload.email}", phone: "${payload.phone}", password: "${payload.password}",isDelivery:true) {
-        payload {
-          username
-          id
-          phone
-        }
-      }
-    }`);
     const resp = await apolloClient
       .mutate({
         mutation: gql`

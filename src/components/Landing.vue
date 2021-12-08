@@ -1,250 +1,34 @@
 <template>
   <div>
     <Toolbar />
-    <div class="ma-10">
-      <v-row justify="center" class="ma-0">
-        <v-col cols="12">
-          <v-data-table :headers="headers" :items="dataO" :items-per-page="7">
-            <template v-slot:[`item.products`]="{ item }">
-              <p v-for="p in item.products" :key="p.id">
-                {{ p.name }}
-              </p>
-            </template>
-            <template v-slot:[`item.vendors`]="{ item }">
-              <p v-for="p in item.vendors" :key="p.id">
-                {{ p.vendor.storeName }}
-              </p>
-            </template>
-            <template v-slot:[`item.status`]="{ item }">
-              <v-chip label :color="getColor(item.status)" dark>
-                {{ item.status }}
-              </v-chip>
-            </template>
-            <template v-slot:[`item.action`]="{ item }">
-              <v-btn icon @click="moreTrue(item.id)">
-                <v-icon>
-                  mdi-dots-vertical
-                </v-icon>
-              </v-btn>
-            </template>
-          </v-data-table>
-        </v-col>
-        <v-bottom-navigation width="700" v-model="value">
-          <v-btn @click="filter = 'completed'" value="completed">
-            <span>Completed</span>
+    <v-row class="ma-0 my-5">
+      <v-col cols="12" md="6">
+        <IncomingOrders></IncomingOrders>
+      </v-col>
+      <v-divider vertical></v-divider>
+      <v-col cols="12" md="6">
+        <AcceptedOrders></AcceptedOrders>
+      </v-col>
+    </v-row>
 
-            <v-icon>mdi-check</v-icon>
-          </v-btn>
-
-          <v-btn @click="filter = 'pending'" value="pending">
-            <span>Pending</span>
-
-            <v-icon>mdi-clock</v-icon>
-          </v-btn>
-
-          <v-btn @click="filter = 'canceled'" value="canceled">
-            <span>Canceled</span>
-
-            <v-icon>mdi-cancel</v-icon>
-          </v-btn>
-        </v-bottom-navigation>
-      </v-row>
-      <v-dialog
-        persistent
-        v-model="vis"
-        style="background-color:red"
-        :overlay-opacity="0.8"
-        width="600"
-        transition="dialog-bottom-transition"
-      >
-        <v-card>
-          <v-row class="ma-0">
-            <v-col>
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Order Id
-              </p>
-              <v-text-field
-                background-color="#ebe9e9"
-                class="mb-0"
-                height="50"
-                solo
-                flat
-                :value="selectedProduct.id"
-                disabled
-              ></v-text-field
-            ></v-col>
-            <v-col>
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Product
-              </p>
-              <p v-for="(p, i) in selectedProduct.products" :key="p.id">
-                {{ i + 1 }}: {{ p.name }}
-              </p>
-            </v-col>
-          </v-row>
-          <v-divider></v-divider>
-          <v-row class="ma-0">
-            <v-col>
-              <div background-color="#ebe9e9">
-                <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                  User Information
-                </p>
-                <p class="text-subtitle-2 mx-1 font-weight-bold mb-1 subTitle">
-                  Username : {{ selectedProduct.username }}
-                </p>
-                <p class="text-subtitle-2 mx-1 font-weight-bold mb-1 subTitle">
-                  Phone Number : {{ selectedProduct.phone }}
-                </p>
-              </div>
-            </v-col>
-            <v-col>
-              <div background-color="#ebe9e9">
-                <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                  Vendors Information
-                </p>
-                <p v-for="p in selectedProduct.products" :key="p.id">
-                  {{ p.vendor.storeName }}: {{ p.vendor.phone }}
-                </p>
-              </div>
-            </v-col>
-          </v-row>
-          <v-divider></v-divider>
-          <v-row class="ma-0">
-            <v-col>
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Total Distance
-              </p>
-              <v-text-field
-                background-color="#ebe9e9"
-                class="mb-0"
-                height="50"
-                solo
-                flat
-                :value="selectedProduct.totalDistance"
-                disabled
-              ></v-text-field
-            ></v-col>
-            <v-col>
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Delivery Price
-              </p>
-              <v-text-field
-                background-color="#ebe9e9"
-                class="mb-0"
-                height="50"
-                solo
-                flat
-                :value="selectedProduct.deliveryPrice"
-                disabled
-              ></v-text-field
-            ></v-col>
-            <v-col>
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Total Price
-              </p>
-              <v-text-field
-                background-color="#ebe9e9"
-                class="mb-0"
-                height="50"
-                solo
-                flat
-                :value="selectedProduct.totalPrice"
-                disabled
-              ></v-text-field
-            ></v-col>
-          </v-row>
-          <v-divider></v-divider>
-          <v-row class="ma-0">
-            <v-col cols="6">
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Status
-              </p>
-              <v-select
-                :items="['PENDING', 'COMPLETED', 'CANCELED']"
-                v-model="status"
-              ></v-select>
-            </v-col>
-            <v-col>
-              <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
-                Reference Number
-              </p>
-              <v-text-field
-                background-color="#ebe9e9"
-                class="mb-0"
-                height="50"
-                solo
-                flat
-                v-model="reference"
-              ></v-text-field
-            ></v-col>
-          </v-row>
-          <v-divider></v-divider>
-          <v-row justify="center" class="ma-0">
-            <v-btn @click="changeStatus" class="ma-5" color="primary"
-              >Apply</v-btn
-            >
-            <v-btn @click="vis = false" class="ma-5" color="error"
-              >Cancel</v-btn
-            >
-          </v-row>
-        </v-card>
-      </v-dialog>
-      <v-dialog
-        persistent
-        v-model="visb"
-        style="background-color:red"
-        :overlay-opacity="0.8"
-        width="600"
-        transition="dialog-bottom-transition"
-      >
-        <v-card class="pa-5">
-          <p class="text-subtitle-1 font-weight-bold mb-1 subTitle">
-            Email
-          </p>
-          <v-text-field
-            background-color="#ebe9e9"
-            class="mb-0"
-            height="50"
-            solo
-            flat
-          ></v-text-field>
-          <p class="text-subtitle-1 font-weight-bold mb-1 subTitle">
-            New Password
-          </p>
-          <v-text-field
-            background-color="#ebe9e9"
-            class="mb-0"
-            height="50"
-            solo
-            flat
-            type="password"
-          ></v-text-field>
-          <v-btn @click="visb = false" color="success" class="ma-2 white--text">
-            Save
-          </v-btn>
-          <v-btn @click="visb = false" color="error" class="ma-2 white--text">
-            Cancel
-          </v-btn>
-        </v-card>
-      </v-dialog>
-    </div>
     <ErrorMessage />
   </div>
 </template>
 <script>
 import Toolbar from "./core/Toolbar.vue";
 import { mapGetters } from "vuex";
+import IncomingOrders from "./IncomingOrders.vue";
+import AcceptedOrders from "./AcceptedOrders.vue";
 export default {
   created() {
     if (!this.isTokenSet) {
       this.$router.push("/login");
     }
-    this.$store.dispatch("getPending");
-    this.$store.dispatch("getCompleted");
-    this.$store.dispatch("getCanceled");
   },
   components: {
     Toolbar,
+    IncomingOrders,
+    AcceptedOrders,
   },
   data() {
     return {
@@ -256,15 +40,21 @@ export default {
       reference: "",
       selectedProduct: {},
       value: "pending",
+      IOheaders: [
+        { text: "User", value: "username" },
+        { text: "Vendor", value: "vendor" },
+        { text: "Total Price (in Birr)", value: "totalPrice" },
+        { text: "Status", value: "status" },
+        { text: "More", value: "action", sortable: false },
+        { text: "Action", value: "accept", sortable: false },
+      ],
       headers: [
         {
           text: "Order ID",
           value: "id",
         },
         { text: "User", value: "username" },
-        { text: "Products", value: "products" },
         { text: "Vendors", value: "vendors" },
-        { text: "Total Distance (in km)", value: "totalDistance" },
         { text: "Delivery Price (in Birr)", value: "deliveryPrice" },
         { text: "Total Price (in Birr)", value: "totalPrice" },
         { text: "Status", value: "status" },
@@ -292,11 +82,9 @@ export default {
           id: item.id,
           username: item.user.username,
           phone: item.user.phone,
-          products: item.products,
-          amount: item.price,
-          totalDistance: item.deliveryOption.totalDistance,
-          deliveryPrice: item.deliveryOption.deliveryPrice,
-          vendors: item.products,
+          products: item.orders.product,
+          deliveryPrice: item.deliveryOption.provider.totalPrice,
+          vendors: item.orders.product.vendor,
           totalPrice: item.price,
           status: item.status,
         };
@@ -307,10 +95,9 @@ export default {
             id: item.id,
             username: item.user.username,
             phone: item.user.phone,
-            productId: Object.keys(JSON.parse(item.productIds)),
-            amount: item.price,
-            totalDistance: item.deliveryOption.totalDistance,
-            deliveryPrice: item.deliveryOption.deliveryPrice,
+            products: item.orders.product,
+            deliveryPrice: item.deliveryOption.provider.totalPrice,
+            vendors: item.orders.product.vendor,
             totalPrice: item.price,
             status: item.status,
           };
@@ -323,10 +110,9 @@ export default {
             id: item.id,
             username: item.user.username,
             phone: item.user.phone,
-            productId: Object.keys(JSON.parse(item.productIds)),
-            amount: item.price,
-            totalDistance: item.deliveryOption.totalDistance,
-            deliveryPrice: item.deliveryOption.deliveryPrice,
+            products: item.orders.product,
+            deliveryPrice: item.deliveryOption.provider.totalPrice,
+            vendors: item.orders.product.vendor,
             totalPrice: item.price,
             status: item.status,
           };

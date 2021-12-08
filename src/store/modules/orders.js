@@ -42,32 +42,37 @@ const actions = {
       .query({
         query: gql`
           {
-            currentOrder {
+            currentOrder(status: "pending") {
               objects {
                 id
-
                 user {
                   username
-                  phone
-                  email
-                }
-                deliveryOption {
-                  totalDistance
-                  deliveryPrice
-                  provider {
-                    name
-                  }
-                }
-                products {
                   id
-                  name
-                  vendor {
-                    storeName
-                    phone
+                  phone
+                }
+                orders {
+                  product {
+                    id
+                    name
+                    sellingPrice
+                    usdPrice
+                    image
+                    vendor {
+                      storeName
+                      phone
+                      id
+                    }
                   }
+                  quantity
                 }
                 price
+                reference
                 status
+                paid
+                paymentMethod
+                tax
+                totalProducts
+                paid
               }
             }
           }
@@ -75,7 +80,6 @@ const actions = {
       })
       .then((response) => {
         commit(types.SHOW_LOADING, false);
-        console.log(response.data.currentOrder.objects);
         commit(types.SAVE_ALL_PENDING, response.data.currentOrder.objects);
       })
       .catch((error) => {
@@ -90,29 +94,34 @@ const actions = {
             currentOrder(status: "completed") {
               objects {
                 id
-
                 user {
                   username
-                  phone
-                  email
-                }
-                deliveryOption {
-                  totalDistance
-                  deliveryPrice
-                  provider {
-                    name
-                  }
-                }
-                products {
                   id
-                  name
-                  vendor {
-                    storeName
-                    phone
+                  phone
+                }
+                orders {
+                  product {
+                    id
+                    name
+                    sellingPrice
+                    usdPrice
+                    image
+                    vendor {
+                      storeName
+                      phone
+                      id
+                    }
                   }
+                  quantity
                 }
                 price
+                reference
                 status
+                paid
+                paymentMethod
+                tax
+                totalProducts
+                paid
               }
             }
           }
@@ -134,29 +143,34 @@ const actions = {
             currentOrder(status: "canceled") {
               objects {
                 id
-
                 user {
                   username
-                  phone
-                  email
-                }
-                deliveryOption {
-                  totalDistance
-                  deliveryPrice
-                  provider {
-                    name
-                  }
-                }
-                products {
                   id
-                  name
-                  vendor {
-                    storeName
-                    phone
+                  phone
+                }
+                orders {
+                  product {
+                    id
+                    name
+                    sellingPrice
+                    usdPrice
+                    image
+                    vendor {
+                      storeName
+                      phone
+                      id
+                    }
                   }
+                  quantity
                 }
                 price
+                reference
                 status
+                paid
+                paymentMethod
+                tax
+                totalProducts
+                paid
               }
             }
           }
@@ -169,47 +183,102 @@ const actions = {
         handleError(error, commit, resp);
       });
   },
-  async getDelayed({ commit }) {
+  async incomingOrders({ commit }) {
+    commit(types.SHOW_LOADING, true);
     const resp = await apolloClient
       .query({
         query: gql`
           {
-            filterOrders(status: "delayed") {
-              id
-              user {
+            getUnassignedOrders {
+              objects {
                 id
-                username
-                phone
+                user {
+                  username
+                  id
+                  phone
+                }
+                orders {
+                  product {
+                    id
+                    name
+                    sellingPrice
+                    usdPrice
+                    image
+                    vendor {
+                      storeName
+                      phone
+                      id
+                    }
+                  }
+                  quantity
+                }
+                price
+                reference
+                status
+                paid
+                paymentMethod
+                tax
+                totalProducts
+                paid
               }
-              price
-              status
-              paid
             }
           }
         `,
       })
       .then((response) => {
-        console.log(response.data.filterOrders);
-        commit(types.SAVE_ALL_DELAYED, response.data.filterProds);
+        commit(types.SHOW_LOADING, false);
+        console.log("incomingOrders");
+        console.log(response.data.getUnassignedOrders.objects);
+        commit(
+          types.SAVE_INCOMING_ORDERS,
+          response.data.getUnassignedOrders.objects
+        );
       })
       .catch((error) => {
         handleError(error, commit, resp);
+      });
+  },
+  async pickupOrders(ctx, value) {
+    ctx.commit(types.SHOW_LOADING, true);
+    const resp = await apolloClient
+      .mutate({
+        mutation: gql`
+          mutation {
+            pickupOrder(orderId: "${value}") {
+              payload {
+                id
+                user {
+                  username
+                  id
+                  phone
+                }
+              }
+            }
+          }
+        `,
+      })
+      .then((response) => {
+        console.log(response.data.pickupOrder);
+        window.location.reload();
+      })
+      .catch((error) => {
+        handleError(error, ctx.commit, resp);
       });
   },
 };
 
 const mutations = {
   [types.SAVE_ALL_PENDING](state, orders) {
-    state.orders = orders;
+    state.pending = orders;
+  },
+  [types.SAVE_INCOMING_ORDERS](state, orders) {
+    state.incomingOrders = orders;
   },
   [types.SAVE_ALL_CANCELED](state, orders) {
     state.canceled = orders;
   },
   [types.SAVE_ALL_COMPLETED](state, orders) {
     state.completed = orders;
-  },
-  [types.SAVE_ALL_DELAYED](state, orders) {
-    state.orders = orders;
   },
 };
 
@@ -219,6 +288,8 @@ const state = {
   delayed: [],
   canceled: [],
   orders: [],
+  incomingOrders: [],
+  acceptedOrders: [],
 };
 
 export default {

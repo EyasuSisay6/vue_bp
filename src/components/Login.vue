@@ -1,125 +1,392 @@
 <template>
-  <div class="login">
-    <v-container fluid fill-height class="loginOverlay">
-      <v-layout flex align-center justify-center>
-        <v-flex xs12 sm4>
-          <v-card>
-            <v-card-title>
-              <h4>Delivery account sign in</h4>
-            </v-card-title>
-            <v-card-text class="pt-4">
-              <v-form ref="form">
-                <v-text-field
-                  label="Username"
-                  v-model="email"
-                  type="email"
-                  required
-                  append-icon="fa-info-circle"
-                ></v-text-field>
-                <v-text-field
-                  label="Password"
-                  v-model="password"
-                  append-icon="fa-info-circle"
-                  type="password"
-                  required
-                ></v-text-field>
-              </v-form>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn @click="submit" class="green white--text">Sign in</v-btn>
-            </v-card-actions>
-          </v-card>
-          <v-card>
-            <v-card-actions>
+  <v-container
+    style="background-color:white;min-height:63vh"
+    fluid
+    class="my-10"
+  >
+    <v-layout row wrap class="mx-10">
+      <v-flex xs12 sm6 offset-sm3>
+        <div class="my-4">
+          <h1 style="font-size:50px; text-color:#4DBA87;" class="">
+            Delivery Log In
+          </h1>
+        </div>
+        <div>
+          <v-subheader dense
+            >Please Sign in to your Ashewa Delivery Account</v-subheader
+          >
+        </div>
+        <v-divider inset></v-divider>
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form @submit.prevent="handleSubmit(submit)">
+            <v-layout column>
+              <v-flex>
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                  <v-text-field
+                    id="userName"
+                    name="userName"
+                    label="User Name"
+                    v-model="userName"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    prepend-inner-icon="mdi-account"
+                    color="#4DBA87"
+                  >
+                  </v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <ValidationProvider rules="required|min:5" v-slot="{ errors }">
+                  <v-text-field
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="Password"
+                    v-model="password"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    color="#4DBA87"
+                    prepend-inner-icon="mdi-account"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
               <v-row>
-                <span style="font-size:16px" class="row-item border"
-                  >Delivery</span
-                >
-                <a
-                  style="font-size:16px"
-                  class="link-color row-item border"
-                  href="https://ashewa.com/sellOnAshewa"
-                  >About</a
-                >
-                <a
-                  style="font-size:16px"
-                  class="link-color row-item"
-                  href="https://retailer.ashewa.com/ship "
-                  >Shipping Policy</a
-                >
+                <!-- <v-col cols="auto" class="mr-auto">
+                  <v-btn
+                    :to="{ path: '/signup' }"
+                    small
+                    text
+                    class="btnForgotPassword"
+                    >Don't have account?</v-btn
+                  >
+                  <v-btn
+                    @click="forgotPassword = true"
+                    small
+                    text
+                    class="btnForgotPassword"
+                    >Forgot password?</v-btn
+                  >
+                </v-col> -->
+
+                <v-col cols="auto">
+                  <SubmitButton
+                    class="white--text"
+                    buttonText="Login"
+                    color="#4DBA87"
+                  />
+                </v-col>
               </v-row>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container>
-    <ErrorMessage />
-  </div>
+            </v-layout>
+          </form>
+        </ValidationObserver>
+      </v-flex>
+      <ErrorMessage />
+      <SuccessMessage />
+    </v-layout>
+    <v-dialog
+      persistent
+      v-model="forgotPassword"
+      style="background-color:red"
+      width="500"
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="pa-5">
+        <h1>Forgot Password?</h1>
+        <v-subheader dense
+          >Please provide your email to reset your password
+        </v-subheader>
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form @submit.prevent="handleSubmit(sendEmail)">
+            <v-layout column>
+              <v-flex>
+                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                  <v-text-field
+                    id="email"
+                    name="email"
+                    label="Email"
+                    v-model="email"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    prepend-inner-icon="mdi-email"
+                    color="#4DBA87"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <SubmitButton
+                  class="white--text"
+                  buttonText="Send"
+                  color="#4DBA87"
+                />
+              </v-flex>
+            </v-layout>
+          </form>
+        </ValidationObserver>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      persistent
+      v-model="resetPassword"
+      style="background-color:red"
+      width="500"
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="pa-5">
+        <h1>Reset Password?</h1>
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form @submit.prevent="handleSubmit(resetMyPassword)">
+            <v-layout column>
+              <v-flex>
+                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                  <v-text-field
+                    id="email"
+                    name="email"
+                    label="Email"
+                    v-model="email"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    prepend-inner-icon="mdi-email"
+                    color="#4DBA87"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <ValidationProvider rules="required" v-slot="{ errors }">
+                  <v-text-field
+                    id="userName"
+                    name="userName"
+                    label="Code"
+                    v-model="code"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    prepend-inner-icon="mdi-account"
+                    color="#4DBA87"
+                  >
+                  </v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <ValidationProvider rules="required|min:5" v-slot="{ errors }">
+                  <v-text-field
+                    id="password"
+                    name="password"
+                    type="password"
+                    label="New Password"
+                    v-model="newPassword"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    color="#4DBA87"
+                    prepend-inner-icon="mdi-account"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <SubmitButton
+                  class="white--text"
+                  buttonText="Send"
+                  color="#4DBA87"
+                />
+              </v-flex>
+            </v-layout>
+          </form>
+        </ValidationObserver>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      persistent
+      v-model="setRequest"
+      style="background-color:red"
+      width="500"
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="pa-5">
+        <h3 class="mb-2">Verify User</h3>
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form @submit.prevent="handleSubmit(requestUserVerify)">
+            <v-layout column>
+              <v-flex>
+                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                  <v-text-field
+                    id="email"
+                    name="email"
+                    label="Email"
+                    v-model="email"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    prepend-inner-icon="mdi-email"
+                    color="#4DBA87"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <v-flex>
+                <SubmitButton
+                  class="white--text"
+                  buttonText="Send"
+                  color="#4DBA87"
+                />
+              </v-flex>
+            </v-layout>
+          </form>
+        </ValidationObserver>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      persistent
+      v-model="serVerify"
+      style="background-color:red"
+      width="500"
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="pa-5">
+        <h3 class="mb-2">Verify User</h3>
+        <ValidationObserver v-slot="{ handleSubmit }">
+          <form @submit.prevent="handleSubmit(verifyEmailA)">
+            <v-layout column>
+              <v-flex>
+                <ValidationProvider rules="required|email" v-slot="{ errors }">
+                  <v-text-field
+                    id="email"
+                    name="email"
+                    label="Email"
+                    v-model="email"
+                    :error="errors.length > 0"
+                    :error-messages="errors[0]"
+                    autocomplete="off"
+                    outlined
+                    dense
+                    prepend-inner-icon="mdi-email"
+                    color="#4DBA87"
+                  ></v-text-field>
+                </ValidationProvider>
+              </v-flex>
+              <ValidationProvider rules="required" v-slot="{ errors }">
+                <v-text-field
+                  id="userName"
+                  name="userName"
+                  label="Code"
+                  v-model="code"
+                  :error="errors.length > 0"
+                  :error-messages="errors[0]"
+                  autocomplete="off"
+                  outlined
+                  dense
+                  prepend-inner-icon="mdi-account"
+                  color="#4DBA87"
+                >
+                </v-text-field>
+              </ValidationProvider>
+              <v-flex>
+                <SubmitButton
+                  class="white--text"
+                  buttonText="Send"
+                  color="#4DBA87"
+                />
+              </v-flex>
+            </v-layout>
+          </form>
+        </ValidationObserver>
+      </v-card>
+    </v-dialog>
+  </v-container>
 </template>
 
 <script>
+import router from "@/router";
 import { mapActions } from "vuex";
+
 export default {
-  data: () => ({
-    email: "",
-    password: "",
-  }),
+  metaInfo() {
+    return {
+      title: "Ashewa",
+      titleTemplate: `Ashewa`,
+    };
+  },
+  data() {
+    return {
+      userName: "",
+      password: "",
+      newPassword: "",
+      code: "",
+      forgotPassword: false,
+    };
+  },
   methods: {
     ...mapActions(["userLogin"]),
+    async requestUserVerify() {
+      this.$store.dispatch("requestSignupCode", this.email);
+      console.log(this.email);
+    },
+    async verifyEmailA() {
+      this.$store.dispatch("verifyEmail", {
+        email: this.email,
+        code: this.code,
+        password: this.password,
+        userName: this.userName,
+      });
+    },
     async submit() {
       await this.userLogin({
-        email: this.email,
+        email: this.userName,
         password: this.password,
       });
+    },
+    async sendEmail() {
+      this.forgotPassword = false;
+      this.$store.dispatch("requestPasswordReset", this.email);
+    },
+    async resetMyPassword() {
+      this.$store.dispatch("resetPassword", {
+        email: this.email,
+        password: this.newPassword,
+        code: this.code,
+      });
+    },
+  },
+  created() {
+    if (this.$store.state.auth.isTokenSet) {
+      router.push({ path: "/" });
+    }
+  },
+  computed: {
+    resetPassword() {
+      return this.$store.state.auth.passwordReset;
+    },
+    setRequest() {
+      return this.verifyPage && !this.requestSent && !this.verified;
+    },
+    serVerify() {
+      return this.verifyPage && this.requestSent && !this.verified;
+    },
+    verifyPage() {
+      return this.$store.state.auth.verifyPage;
+    },
+    requestSent() {
+      return this.$store.state.auth.requestSent;
+    },
+    verify() {
+      return this.$store.state.auth.verify;
     },
   },
 };
 </script>
-
-<style scoped>
-.login {
-  height: 100vh;
-}
-h4 {
-  font-size: 1em !important;
-  padding: 1em;
-  color: black;
-}
-.v-card {
-  text-align: center;
-  margin: 1em;
-}
-.v-card__title {
-  justify-content: center;
-}
-.v-btn {
-  width: 100%;
-}
-.link-color {
-  color: #d38841;
-  text-decoration: none;
-}
-.v-card {
-  padding: 1em;
-}
-.v-card__actions {
-  display: block;
-}
-.green {
-  margin-bottom: 1em;
-}
-.create {
-  text-transform: capitalize;
-  margin-bottom: 1em;
-}
-.row {
-  font-size: 0.7em;
-  justify-content: center;
-}
-.row-item {
-  padding: 0 0.7em;
-}
-.border {
-  border-right: 1px solid black;
-}
-</style>
