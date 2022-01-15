@@ -3,10 +3,12 @@
     <Toolbar />
     <v-row class="ma-0 my-5">
       <v-col cols="12" md="6">
+        <h2>Incoming Orders</h2>
         <IncomingOrders></IncomingOrders>
       </v-col>
       <v-divider vertical></v-divider>
       <v-col cols="12" md="6">
+        <h2>Assigned Orders</h2>
         <AcceptedOrders></AcceptedOrders>
       </v-col>
     </v-row>

@@ -119,7 +119,7 @@
           ></v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-row class="ma-0">
+        <v-row v-if="value === 'pending'" class="ma-0">
           <v-col cols="6">
             <p class="text-subtitle-1 mx-1 font-weight-bold mb-1 subTitle">
               Status
@@ -144,7 +144,7 @@
           ></v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-row justify="center" class="ma-0">
+        <v-row v-if="value === 'pending'" justify="center" class="ma-0">
           <v-btn @click="changeStatus" class="ma-5" color="primary"
             >Apply</v-btn
           >

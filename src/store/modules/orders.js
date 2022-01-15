@@ -42,7 +42,7 @@ const actions = {
       .query({
         query: gql`
           {
-            currentOrder(status: "pending") {
+            currentOrder(status: "accepted") {
               objects {
                 id
                 user {
